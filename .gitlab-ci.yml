@@ -18,7 +18,6 @@ stages:
 
 before_script:
   - export BIN=bin/
-  - export PATH=$PATH:/$BIN
   - export FILES=(git diff-tree --no-commit-id --name-only -r $CI_COMMIT_SHA)
 # TODO Figure out how to select extension
 
@@ -37,7 +36,7 @@ download:
 index:
     stage: validate
     script:
-        - extension-tester --ci --validate-index
+        - $BIN/extension-tester --ci --validate-index
     cache:
       key: "$CI_COMMIT_REF_NAME"
       policy: pull
@@ -47,7 +46,7 @@ index:
 metadata:
     stage: validate
     script:
-        - extension-tester --ci --validate-metadata $FILES
+        - $BIN/extension-tester --ci --validate-metadata $FILES
     cache:
       key: "$CI_COMMIT_REF_NAME"
       policy: pull
@@ -57,7 +56,7 @@ metadata:
 test:
     stage: test
     script:
-        - extension-tester --ci $FILES
+        - $BIN/extension-tester --ci $FILES
     cache:
       key: "$CI_COMMIT_REF_NAME"
       policy: pull
