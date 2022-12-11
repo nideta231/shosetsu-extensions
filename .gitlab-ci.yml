@@ -18,7 +18,7 @@ stages:
 
 before_script:
   - export BIN=bin/
-  - export FILES=(git diff-tree --no-commit-id --name-only -r $CI_COMMIT_SHA)
+  - export FILES=`git diff-tree --no-commit-id --name-only -r $CI_COMMIT_SHA`
 # TODO Figure out how to select extension
 
 download:
