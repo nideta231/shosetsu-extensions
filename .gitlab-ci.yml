@@ -18,7 +18,7 @@ stages:
 
 before_script:
   - export BIN=bin/
-  - export FILES=`git diff-tree --no-commit-id --name-only -r $CI_COMMIT_SHA | grep .lua`
+  - export FILES=`git diff-tree --no-commit-id --name-only -r $CI_COMMIT_SHA | grep .lua | tr -d '\012\015'`
 # TODO Figure out how to select extension
 
 download:
@@ -51,7 +51,7 @@ metadata:
       paths:
         - bin
     rules:
-      - if: $FILES != "\n"
+      - if: $FILES != ""
 
 test:
     stage: test
@@ -63,4 +63,4 @@ test:
       paths:
         - bin
     rules:
-      - if: $FILES != "\n"
+      - if: $FILES != ""
