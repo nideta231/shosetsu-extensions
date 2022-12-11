@@ -17,7 +17,7 @@ stages:
   - test
 
 before_script:
-  - export BIN=$(PWD)/bin/
+  - export BIN=bin/
   - export PATH=$PATH:/$BIN
   - export FILES=(git diff-tree --no-commit-id --name-only -r $CI_COMMIT_SHA)
 # TODO Figure out how to select extension
