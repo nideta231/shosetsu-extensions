@@ -25,7 +25,6 @@ download:
     stage: .pre
     script: 
         - wget -q https://cdn.shosetsu.app/extension-tester/v1.1.0/extension-tester.jar -P $BIN/
-        - echo "java -jar $BIN/extension-tester.jar $@" > $BIN/extension-tester
         - chmod +x $BIN/extension-tester
     cache:
       key: "$CI_COMMIT_REF_NAME"
@@ -36,7 +35,7 @@ download:
 index:
     stage: validate
     script:
-        - $BIN/extension-tester --ci --validate-index
+        - java -jar $BIN/extension-tester.jar --ci --validate-index
     cache:
       key: "$CI_COMMIT_REF_NAME"
       policy: pull
@@ -46,7 +45,7 @@ index:
 metadata:
     stage: validate
     script:
-        - $BIN/extension-tester --ci --validate-metadata $FILES
+        - java -jar $BIN/extension-tester.jar --ci --validate-metadata $FILES
     cache:
       key: "$CI_COMMIT_REF_NAME"
       policy: pull
@@ -56,7 +55,7 @@ metadata:
 test:
     stage: test
     script:
-        - $BIN/extension-tester --ci $FILES
+        - java -jar $BIN/extension-tester.jar --ci $FILES
     cache:
       key: "$CI_COMMIT_REF_NAME"
       policy: pull
