@@ -25,7 +25,7 @@ download:
     stage: .pre
     script: 
         - wget -q https://cdn.shosetsu.app/extension-tester/v1.1.0/extension-tester.jar -P $BIN/
-        - echo "java -jar $BIN/extension-tester.jar" > $BIN/extension-tester
+        - echo "java -jar $BIN/extension-tester.jar $@" > $BIN/extension-tester
         - chmod +x $BIN/extension-tester
     cache:
       key: "$CI_COMMIT_REF_NAME"
