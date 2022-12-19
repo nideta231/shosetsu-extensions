@@ -3,7 +3,7 @@
 local baseURL = "https://reaperscans.com"
 
 local function shrinkURL(url)
-	return url:match(baseURL .. "/novels/(.+)/")
+	return url:match(baseURL .. "/novels/(.+)")
 end
 
 local function expandURL(url)
