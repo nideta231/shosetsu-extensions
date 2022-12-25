@@ -19,67 +19,95 @@ local function getPassage(chapterURL)
 end
 
 local function parseNovel(novelURL)
+	--- URL of the novel
 	local url = baseURL .. "/" .. novelURL
-	local document = GETDocument(url):selectFirst("article.post")
+	--- HTML document of the novel
+	local document = GETDocument(url)
+
+	--- Novel info to be constructed
 	local novelInfo = NovelInfo()
-	
-	local headerNChapters = document:selectFirst("div.p-2.space-y-4")
-	
-	-- Header
+
+	local headNChaptersSelector = "div.p-2.space-y-4"
+	--- Element that contains the header & chapters
+	print(document:toString():gsub("\n",""))
+	local headerNChapters = document:selectFirst(headNChaptersSelector)
+
+	--- Element that contains the cover art & title
 	local headerElement = headerNChapters:selectFirst("div.mx-auto")
 
+	--- Title element
 	local titleElement = headerNChapters:selectFirst("h1")
 	novelInfo:setTitle(titleElement:text())
 
+	--- Image element
 	local imageElement = headerElement:selectFirst("img")
 	novelInfo:setImageURL(imageElement:attr("src"))
 	
-	-- About	
+	--- Element that contains the Summary & Other information
 	local aboutElement = document:selectFirst("div.lg\:col-span-1")
 
+	--- Summary Element
 	local descriptionElement = aboutElement:selectFirst("p")
 	novelInfo:setDescription(descriptionElement:text():gsub("<br>","\n"))
-		
+
+	--- Other elements, such as source language and such forth
 	local otherElements = document:selectFirst("dl.mt-2"):select("dd")
-	
+
+	--- Language element, listed first
 	local languageElement = otherElements[0]
 	novelInfo:setLanguage(languageElement:text())
 
+	--- Status of the novel, listed second
 	local statusElement = otherElements[1]
 	local status = statusElement:text()
 	novelInfo:setStatus(NovelStatus(status == "Completed" and 1 or status == "Ongoing" and 0 or 3))
 
-	-- Chapters
-	local chaptersBoxElement = headerNChapters:selectFirst("pb-4"):selectFirst("ul")
+	local chaptersBoxElementQuery = "pb-4"
+	--- Element that contains the chapters
+	local chaptersBoxElement = headerNChapters:selectFirst(chaptersBoxElementQuery):selectFirst("ul")
 
+	--- pages to iterate over
 	local pages = 0
-	pages = chaptersBoxElement:selectFirst("div.releative.z-0"):select("button"):size()
-	
-	-- After the following loop, this array will contain a list of chapters reversed.
+	-- Pages must be determined by the amount of buttons in the navigation try, -2 for back and forward
+	pages = chaptersBoxElement:selectFirst("span.relative.z-0.inline-flex"):select("span"):size() - 2
+
+	--- total list of all chapter elements
 	local chapterElements = {}
-	chapterElements.concat(chaptersBoxElement:select("li"))
-	
-	for page = 0, pages, 1
+
+	-- Loop through the pages
+	local page = 0;
+	while (page < pages)
 	do
-		document = GETDocument(url .. "?page=" .. page):selectFirst("article.post")
-		headerNChapters = document:selectFirst("div.p-2.space-y-4")
-		chaptersBoxElement = headerNChapters:selectFirst("pb-4"):selectFirst("ul")
+		-- Only reload the page for subsequent pages, we already have the first page
+		if (page ~= 0) then
+			document = GETDocument(url .. "?page=" .. page):selectFirst("article.post")
+		end
+		headerNChapters = document:selectFirst(headNChaptersSelector)
+		chaptersBoxElement = headerNChapters:selectFirst(chaptersBoxElementQuery):selectFirst("ul")
 		chapterElements.concat(chaptersBoxElement:select("li"))
+		page = page + 1;
+		delay(100)
 	end
 
 	local count = 0
-	local chapters = map(
+	local chapters = mapNotNil(
 		chapterElements,
 		function(chapter)
+			-- ignore paid chapters
+			if chapter:selectFirst("span") == nil then
+				return nil
+			end
 			local c = NovelChapter()
 			c:setTitle(chapter:selectFirst("p"):text())
 			c:setLink(chapter:selectFirst("a"):attr("href"))
-			
+
 			-- count the chapters
 			count = count + 1
 			return c
 		end
 	)
+
+	-- Reverse the chapter order
 	chapters = map(
 		chapters,
 		function(chapter)
@@ -89,8 +117,9 @@ local function parseNovel(novelURL)
 		end
 	)
 	Reverse(chapters)
-	novelInfo:setChapters(chapters)	
-	
+
+	novelInfo:setChapters(chapters)
+
 	return novelInfo
 end
 
