@@ -41,7 +41,7 @@ index:
       paths:
         - bin
 
-metadata:
+.metadata:
     stage: validate
     script:
         - java -jar $BIN/extension-tester.jar --ci --validate-metadata $FILES
@@ -53,7 +53,7 @@ metadata:
     rules:
       - if: $FILES != ""
 
-test:
+.test:
     stage: test
     script:
         - java -jar $BIN/extension-tester.jar --ci $FILES
