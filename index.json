@@ -231,16 +231,6 @@
       "md5": ""
     },
     {
-      "name": "Pink Muffin TL",
-      "fileName": "PinkMuffinTL",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/PinkMuffinTL.png",
-      "id": 4301,
-      "lang": "en",
-      "ver": "1.1.2",
-      "libVer": "1.0.0",
-      "md5": ""
-    },
-    {
       "name": "Travis Translations",
       "fileName": "TravisTranslations",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/TravisTranslations.png",
@@ -296,7 +286,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/TeamXNovel.png",
       "id": 4501,
       "lang": "ar",
-      "ver": "1.0.2",
+      "ver": "1.0.3",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -376,7 +366,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/AsianHobbyist.png",
       "id": 951,
       "lang": "en",
-      "ver": "2.0.4",
+      "ver": "2.0.5",
       "libVer": "1.0.0",
       "md5": "16348946cb5981a279d80b5f34ffe505"
     },
@@ -406,7 +396,7 @@
       "imageURL": "https://asuralightnovel.com/wp-content/uploads/2017/10/asura-light-novel-logo-4-e1627846850601.png",
       "id": 1783,
       "lang": "en",
-      "ver": "1.0.0",
+      "ver": "1.0.1",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -446,7 +436,7 @@
       "imageURL": "https://zetrotranslation.com/wp-content/uploads/2020/12/logo_red-e1607700845220.png",
       "id": 428270,
       "lang": "en",
-      "ver": "1.0.0",
+      "ver": "1.0.1",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -471,12 +461,12 @@
       "md5": ""
     },
     {
-      "name": "LatestNovel",
+      "name": "Many Novel",
       "fileName": "Latestnovel",
-      "imageURL": "https://latestnovel.net/wp-content/themes/madara/images/logo.png",
+      "imageURL": "https://manynovel.net/wp-content/themes/madara/images/logo.png",
       "id": 2672381,
       "lang": "en",
-      "ver": "1.0.0",
+      "ver": "1.0.1",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -566,7 +556,7 @@
       "imageURL": "https://novelcake.com/wp-content/uploads/2017/10/NOVELCAKE_2.png",
       "id": 75,
       "lang": "en",
-      "ver": "1.0.6",
+      "ver": "1.0.7",
       "libVer": "1.0.0",
       "md5": ""
     },

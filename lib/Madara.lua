@@ -172,6 +172,12 @@ local function img_src(image_element)
 	return image_element:attr("src")
 end
 
+---@param document Document The page containing novel information
+---@return string the novel description
+function defaults:parseNovelDescription(document)
+	return table.concat(map(doc:selectFirst("div.summary__content"):select("p"), text), "\n")
+end
+
 ---@param url string
 ---@param loadChapters boolean
 ---@return NovelInfo
@@ -187,7 +193,7 @@ function defaults:parseNovel(url, loadChapters)
 	local selectedContent = doc:selectFirst("div.post-status"):select("div.post-content_item")
 
 	local info = NovelInfo {
-		description = table.concat(map(doc:selectFirst("div.summary__content"):select("p"), text), "\n"),
+		description = self.parseNovelDescription(doc),
 		title = titleElement:text(),
 		imageURL = img_src(doc:selectFirst("div.summary_image"):selectFirst("img.img-responsive")),
 		status = ({
