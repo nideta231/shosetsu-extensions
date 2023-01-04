@@ -1,4 +1,4 @@
--- {"id":86802,"ver":"1.0.2","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":86802,"ver":"1.0.3","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://www.scribblehub.com"
 local qs = Require("url").querystring
@@ -30,7 +30,11 @@ local HEADERS = HeadersBuilder():add("User-Agent", USERAGENT):build()
 
 local function parse(doc)
 	return map(doc:selectFirst("#page"):select(".wi_fic_wrap .search_main_box"), function(v)
-		local t = v:selectFirst(".search_body .search_title a")
+		local body = v:selectFirst(".search_body .search_title a")
+		if body == nil then
+			body = v
+		end
+		local t = v:selectFirst(".search_title a")
 		return Novel {
 			title = t:text(),
 			link = t:attr("href"):match("/series/(%d+)"),
