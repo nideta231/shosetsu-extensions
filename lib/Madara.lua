@@ -1,4 +1,4 @@
--- {"ver":"2.7.0","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.8.0","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -175,7 +175,7 @@ end
 ---@param document Document The page containing novel information
 ---@return string the novel description
 function defaults:parseNovelDescription(document)
-	return table.concat(map(doc:selectFirst("div.summary__content"):select("p"), text), "\n")
+	return table.concat(map(document:selectFirst("div.summary__content"):select("p"), text), "\n")
 end
 
 ---@param url string
