@@ -1,4 +1,4 @@
--- {"id":74,"ver":"1.0.0","libVer":"1.0.0","author":"Rider21"}
+-- {"id":74,"ver":"1.0.1","libVer":"1.0.0","author":"Rider21"}
 
 local baseURL = "https://jaomix.ru"
 
@@ -108,7 +108,7 @@ local function getSearch(data)
 end
 
 local function getPassage(chapterURL)
-	local d = GETDocument(baseURL .. chapterURL)
+	local d = GETDocument(expandURL(chapterURL))
 	local chap = d:selectFirst(".entry-content")
 	chap:select(".adblock-service"):remove()
 	chap:child(0):before("<h1>" .. d:select(".entry-title"):text() .. "</h1>");
@@ -141,42 +141,16 @@ local function parseNovel(novelURL, loadChapters)
 	end)
 
 	if loadChapters then
-		local chapterList = {}
-		local chapterHtml = d:select("div.columns-toc div.title") --page 1
-		local termid = d:select('div[class="like-but"]'):attr("id")
-		local order = 9999999
-		local page = RequestDocument(
-			POST(baseURL .. "/wp-admin/admin-ajax.php", nil,
-				FormBodyBuilder()
-				:add("action", "toc")
-				:add("selectall", termid)
-				:build()
-			)
-		):select("select > option"):size()
-
-		for i = 1, page do --it might take a long time if there are a lot of chapters
-			if i > 1 then
-				chapterHtml = RequestDocument(--gets 25 chapters
-					POST(baseURL .. "/wp-admin/admin-ajax.php", nil,
-						FormBodyBuilder()
-						:add("action", "toc")
-						:add("page", i)
-						:add("termid", termid)
-						:build()
-					)
-				):select("div.columns-toc div.title")
-			end
-
-			map(chapterHtml, function(v)
-				table.insert(chapterList, NovelChapter {
-					title = v:select("h2"):text(),
-					link = v:select("a"):attr("href"),
-					release = v:select("time"):text(),
-					order = order
-				})
-				order = order - 1
-			end)
-		end
+		local chapterHtml = d:select(".download-chapter div.title")
+		local order = chapterHtml:size()
+		local chapterList = map(chapterHtml, function(v, i)
+			return NovelChapter {
+				title = v:select("a"):attr("title"),
+				link = shrinkURL(v:select("a"):attr("href")),
+				release = v:select("time"):text(),
+				order = order - i
+			}
+		end)
 		novel:setChapters(AsList(chapterList))
 	end
 	return novel
