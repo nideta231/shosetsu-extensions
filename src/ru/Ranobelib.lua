@@ -108,7 +108,7 @@ return {
 					elseif (k > 99 and k < 199) then
 						url = url .. "&genres[include][]=" .. k - 100
 					elseif (k > 199 and k < 600) then
-						url = url .. "tags[include][]=" .. k - 200
+						url = url .. "&tags[include][]=" .. k - 200
 					end
 				end
 			end
