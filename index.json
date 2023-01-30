@@ -383,10 +383,10 @@
     {
       "name": "Novel Nb",
       "fileName": "NovelNb",
-      "imageURL": "https://novelnb.com/assets/css/img/logo.png",
+      "imageURL": "https://novelnb.net/assets/css/img/logo.png",
       "id": 1781,
       "lang": "en",
-      "ver": "1.0.1",
+      "ver": "1.0.2",
       "libVer": "1.0.0",
       "md5": ""
     },

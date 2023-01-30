@@ -1,4 +1,4 @@
--- {"id":1781,"ver":"1.0.1","libVer":"1.0.0","author":"Xanvial"}
+-- {"id":1781,"ver":"1.0.2","libVer":"1.0.0","author":"Xanvial"}
 local qs = Require("url").querystring
 
 local defaults = {
@@ -185,8 +185,8 @@ local function novelData(baseURL, _self)
 	return _self
 end
 
-return novelData("https://novelnb.com", {
+return novelData("https://novelnb.net", {
 	id = 1781,
 	name = "Novel Nb",
-	imageURL = "https://novelnb.com/assets/css/img/logo.png",
+	imageURL = "https://novelnb.net/assets/css/img/logo.png",
 })
