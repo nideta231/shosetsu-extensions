@@ -20,9 +20,9 @@ local function getSearch(data)
 	local novels = json.GET(expandURL("search?type=manga&q=" .. data[QUERY]))
 	return map(novels, function(v)
 		return Novel {
-			title = v.rusName or v.engName or v.name,
+			title = v.rus_name or v.name,
 			link = v.slug,
-			imageURL = baseURL .. v.coverImage
+			imageURL = v.coverImage
 		}
 	end)
 end
@@ -97,47 +97,29 @@ return {
 
 	listings = {
 		Listing("Novel List", true, function(data)
-			local url = baseURL .. "/manga-list?sort=" .. ORDER_BY_TERMS[data[ORDER_BY_FILTER] + 1] .. "&page=" .. data[PAGE]
-
-			local genres = {}
-			local tags = {}
-			local types = {}
-			local status = {}
+			local url = baseURL .. "/manga-list?sort=" .. ORDER_BY_TERMS[data[ORDER_BY_FILTER] + 1]
 
 			for k, v in pairs(data) do
 				if v then
 					if (k > 9 and k < 16) then
-						table.insert(types, "types[]=" .. k)
+						url = url .. "&types[]=" .. k
 					elseif (k > 16 and k < 21) then
-						table.insert(status, "status[]=" .. k - 16)
+						url = url .. "&status[]=" .. k - 16
 					elseif (k > 99 and k < 199) then
-						table.insert(genres, "genres[include][]=" .. k - 100)
+						url = url .. "&genres[include][]=" .. k - 100
 					elseif (k > 199 and k < 600) then
-						table.insert(tags, "tags[include][]=" .. k - 200)
+						url = url .. "&tags[include][]=" .. k - 200
 					end
 				end
 			end
 
-			if #tags > 0 then
-				url = url .. "&" .. table.concat(tags, "&")
-			end
-			if #genres > 0 then
-				url = url .. "&" .. table.concat(genres, "&")
-			end
-			if #types > 0 then
-				url = url .. "&" .. table.concat(types, "&")
-			end
-			if #status > 0 then
-				url = url .. "&" .. table.concat(status, "&")
-			end
-
-			local d = GETDocument(url)
+			local d = GETDocument(url .. "&page=" .. data[PAGE])
 
 			return map(d:select("div.media-card-wrap > a"), function(v)
 				return Novel {
 					title = v:select("h3"):text(),
 					link = shrinkURL(v:attr("href")),
-					imageURL = baseURL .. v:attr("data-src")
+					imageURL = v:attr("data-src")
 				}
 			end)
 		end)
