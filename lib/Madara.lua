@@ -200,10 +200,16 @@ function defaults:parseNovel(url, loadChapters)
 	-- Temporarily saves a Jsoup selection for repeated use. Initial value used for status.
 	local selectedContent = doc:selectFirst("div.post-status"):select("div.post-content_item")
 
+	-- For some that doesn't have thumbnail
+	local imgUrl = doc:selectFirst("div.summary_image")
+	if imgUrl then
+		imgUrl = img_src(imgUrl:selectFirst("img.img-responsive"))
+	end
+
 	local info = NovelInfo {
 		description = self.parseNovelDescription(doc),
 		title = titleElement:text(),
-		imageURL = img_src(doc:selectFirst("div.summary_image"):selectFirst("img.img-responsive")),
+		imageURL = imgUrl,
 		status = ({
 					OnGoing = NovelStatus.PUBLISHING,
 					Completed = NovelStatus.COMPLETED,
