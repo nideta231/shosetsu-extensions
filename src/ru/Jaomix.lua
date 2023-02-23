@@ -1,10 +1,11 @@
--- {"id":74,"ver":"1.0.1","libVer":"1.0.0","author":"Rider21"}
+-- {"id":74,"ver":"1.0.2","libVer":"1.0.0","author":"Rider21"}
 
 local baseURL = "https://jaomix.ru"
 
 local ORDER_BY_FILTER = 3
-local ORDER_BY_VALUES = { "Дате добавления", "Имя", "Просмотры", "Дате обновления" }
-local ORDER_BY_TERMS = { "new", "alphabet", "count", "upd" }
+local ORDER_BY_VALUES = { "Дате добавления", "Имя", "Просмотры", "Дате обновления",
+	"Топ дня", "Топ недели", "Топ месяца", "Топ года", "Топ за все время" }
+local ORDER_BY_TERMS = { "new", "alphabet", "count", "upd", "topday", "topweek", "topyear", "alltime" }
 
 local LANGUAGE_FILTER = 4
 local LANGUAGE_VALUES = {
@@ -25,6 +26,7 @@ local GENRE_VALUES = {
 	"Истории из жизни",
 	"Исторический",
 	"История",
+	"Исэкай",
 	"Комедия",
 	"Меха",
 	"Мистика",
@@ -49,12 +51,12 @@ local GENRE_VALUES = {
 	"Шоунен",
 	"Экшн",
 	"Этти",
+	"Юри",
 	"Adult",
 	"Ecchi",
 	"Josei",
 	"Lolicon",
 	"Mature",
-	"Sci-fi",
 	"Shoujo",
 	"Wuxia",
 	"Xianxia",
@@ -79,13 +81,11 @@ local function split(str, pat)
 end
 
 local function getSearch(data)
-	local url = baseURL .. "/?search="
+	local url = baseURL .. "/?searchrn"
 
 	if data[0] then --search
-		url = url .. data[0] .. "&but=Поиск+по+названию"
+		url = url .. "=" .. data[0] .. "&but=Поиск+по+названию"
 	end
-
-	url = url .. "&sortby=" .. ORDER_BY_TERMS[data[ORDER_BY_FILTER] + 1] .. "&page=" .. data[PAGE]
 
 	for k, v in pairs(data) do
 		if v then
@@ -96,6 +96,8 @@ local function getSearch(data)
 			end
 		end
 	end
+
+	url = url .. "&sortby=" .. ORDER_BY_TERMS[data[ORDER_BY_FILTER] + 1] .. "&page=" .. data[PAGE]
 
 	local d = GETDocument(url)
 	return map(d:select("div.one div.img-home > a"), function(v)
