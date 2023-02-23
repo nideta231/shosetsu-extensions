@@ -1,4 +1,4 @@
--- {"ver":"2.8.0","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.9.0","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -12,7 +12,7 @@ local defaults = {
 	searchNovelSel = "div.c-tabs-item__content",
 	novelListingURLPath = "novel",
 	-- Certain sites like TeamXNovel do not use [novelListingURLPath] and instead use a suffix to the query to declare what is expected.
- 	novelListingURLSuffix = "",
+	novelListingURLSuffix = "",
 	novelPageTitleSel = "div.post-title",
 	shrinkURLNovel = "novel",
 	searchHasOper = false, -- is AND/OR operation selector present?
@@ -175,7 +175,15 @@ end
 ---@param document Document The page containing novel information
 ---@return string the novel description
 function defaults:parseNovelDescription(document)
-	return table.concat(map(document:selectFirst("div.summary__content"):select("p"), text), "\n")
+	local summaryContent = document:selectFirst("div.summary__content")
+	if summaryContent then
+		return table.concat(map(document:selectFirst("div.summary__content"):select("p"), text), "\n")
+	end
+	local mangaExcerpt = document:selectFirst("div.manga-excerpt")
+	if mangaExcerpt then
+		return mangaExcerpt:text()
+	end
+	return ""
 end
 
 ---@param url string
@@ -192,10 +200,16 @@ function defaults:parseNovel(url, loadChapters)
 	-- Temporarily saves a Jsoup selection for repeated use. Initial value used for status.
 	local selectedContent = doc:selectFirst("div.post-status"):select("div.post-content_item")
 
+	-- For some that doesn't have thumbnail
+	local imgUrl = doc:selectFirst("div.summary_image")
+	if imgUrl then
+		imgUrl = img_src(imgUrl:selectFirst("img.img-responsive"))
+	end
+
 	local info = NovelInfo {
 		description = self.parseNovelDescription(doc),
 		title = titleElement:text(),
-		imageURL = img_src(doc:selectFirst("div.summary_image"):selectFirst("img.img-responsive")),
+		imageURL = imgUrl,
 		status = ({
 					OnGoing = NovelStatus.PUBLISHING,
 					Completed = NovelStatus.COMPLETED,
