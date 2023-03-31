@@ -1,4 +1,4 @@
--- {"id":4304,"ver":"1.1.2","libVer":"1.0.0","author":"MechTechnology"}
+-- {"id":4304,"ver":"1.2.0","libVer":"1.0.0","author":"MechTechnology"}
 
 local baseURL = "https://readhive.org"
 
@@ -51,20 +51,22 @@ end
 
 local function parseNovel(novelURL, loadChapters)
 	local doc = GETDocument(expandURL(novelURL))
-	local content = doc:selectFirst("main")
-	local description = content:selectFirst(".grid-in-desc")
-	description = clearNewLines(description)
+	local content = doc:selectFirst("main [class*=grid-areas-series__body]")
+	local description = content:selectFirst("[x-show*=about] .mb-4")
+	if description ~= nil then
+		description = clearNewLines(description)
+	end
 
 	local info = NovelInfo {
-		title = content:selectFirst("h1"):text(),
-		imageURL = expandURL(content:selectFirst(".grid-in-art"):selectFirst("img"):attr("src")),
+		title = doc:selectFirst("h1"):text(),
+		imageURL = expandURL(doc:selectFirst("[class*=grid-in-art] img"):attr("src")),
 		description = table.concat(map(description:select("p"), text), '\n'),
-		genres = map(content:selectFirst(".grid-in-info"):child(1):select("a"), text),
-		tags = map(content:selectFirst(".grid-in-info"):child(3):select("a"), text)
+		genres = map(content:selectFirst("[class*=grid-in-info]"):select("a"), text),
+		tags = map(content:selectFirst("[x-show*=about]"):select("a"), text)
 	}
 	
 	if loadChapters then
-		local chapterList = content:selectFirst(".grid-in-content"):selectFirst(".grid.w-full"):select("a")
+		local chapterList = content:selectFirst("[x-show*=releases]"):select("a")
 		local chapterOrder = chapterList:size()
 		local chapters = (mapNotNil(chapterList, function(v, i)
 			-- This is to ignore the premium chapter, those have a lock icon in their anchor.
