@@ -1,4 +1,4 @@
--- {"id":1781,"ver":"1.0.2","libVer":"1.0.0","author":"Xanvial"}
+-- {"id":1781,"ver":"1.0.5","libVer":"1.0.0","author":"Xanvial"}
 local qs = Require("url").querystring
 
 local defaults = {
@@ -40,6 +40,7 @@ function defaults:getPassage(url)
 	htmlElement:select("ins"):remove()
 	htmlElement:select("div.ads"):remove()
 	htmlElement:select("div[align=\"left\"]:last-child"):remove() -- Report error text
+	htmlElement:select("sub"):remove()
 
 	-- Chapter title inserted before chapter text.
 	htmlElement:child(0):before("<h1>" .. title .. "</h1>");
@@ -106,7 +107,7 @@ function defaults:parseNovel(url, loadChapters)
 				curPage = curPage + 1
 			end
 			chapterTable = tableConcat(chapterTable, map(
-					curDocs:selectFirst(".list-chapter"):select("li a"),
+					curDocs:select(".list-chapter"):select("li a"),
 					function(v)
 						local chap = NovelChapter()
 						chap:setLink(self.shrinkURL(v:attr("href")))
@@ -143,25 +144,25 @@ function defaults:parseList(url)
 	end)
 end
 
---https://novelnb.com/search?q=sample&page=1
+--https://novelnb.net/search?q=sample&page=1
 --- @return Novel[]
 function defaults:search(data)
 	return self.parseList(qs({ q = data[QUERY], page = data[PAGE] }, self.baseURL .. "/search"))
 end
 
---https://novelnb.com/list/hot-novel?page=1
+--https://novelnb.net/list/hot-novel?page=1
 --- @return Novel[]
 function defaults:hotList(data)
 	return self.parseList(self.baseURL .. self.hot .. "?page="  .. data[PAGE])
 end
 
---https://novelnb.com/list/latest-release-novel?page=1
+--https://novelnb.net/list/latest-release-novel?page=1
 --- @return Novel[]
 function defaults:latestList(data)
 	return self.parseList(self.baseURL .. self.latest .. "?page="  .. data[PAGE])
 end
 
---https://novelnb.com/list/completed-novel?page=1
+--https://novelnb.net/list/completed-novel?page=1
 --- @return Novel[]
 function defaults:completedList(data)
 	return self.parseList(self.baseURL .. self.completed .. "?page="  .. data[PAGE])
