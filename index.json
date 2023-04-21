@@ -561,6 +561,16 @@
       "md5": ""
     },
     {
+      "name": "Novel.tl",
+      "fileName": "NovelTl",
+      "imageURL": "https://novel.tl/logo.png",
+      "id": 712,
+      "lang": "ru",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
       "name": "Novelcake",
       "fileName": "novelcake",
       "imageURL": "https://novelcake.com/wp-content/uploads/2017/10/NOVELCAKE_2.png",
