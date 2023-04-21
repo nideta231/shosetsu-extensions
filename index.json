@@ -599,6 +599,16 @@
       "ver": "1.0.3",
       "libVer": "1.0.0",
       "md5": ""
+    },
+    {
+      "name": "Kemono",
+      "fileName": "Kemono",
+      "imageURL": "https://kemono.party/static/klogo.png",
+      "id": 93278,
+      "lang": "all",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
     }
   ]
 }
