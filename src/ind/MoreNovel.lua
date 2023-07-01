@@ -1,4 +1,4 @@
--- {"id":823465,"ver":"1.0.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.2.0"]}
+-- {"id":823465,"ver":"1.0.1","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.2.0"]}
 
 return Require("Madara")("https://morenovel.net",{
 	id = 823465,
@@ -6,7 +6,7 @@ return Require("Madara")("https://morenovel.net",{
 	imageURL = "https://morenovel.net/wp-content/uploads/2019/04/morenovel-1.png",
 
 	-- defaults values
-	latestNovelSel = "div.col-12.col-md-6.badge-pos-1",
+	latestNovelSel = "div.col-12.col-md-4.badge-pos-1",
 
 	genres = {
 		"Action",
