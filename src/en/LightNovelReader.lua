@@ -1,4 +1,4 @@
--- {"id":1784,"ver":"1.0.3","libVer":"1.0.0","author":"Xanvial"}
+-- {"id":1784,"ver":"1.0.4","libVer":"1.0.0","author":"Xanvial"}
 
 local json = Require("dkjson")
 
@@ -23,14 +23,14 @@ local name = "Light Novel Reader"
 --- Required.
 ---
 --- @type string
-local baseURL = "https://lnreader.org/"
+local baseURL = "https://readlightnovel.online/"
 
 --- URL of the logo.
 ---
 --- Optional, Default is empty.
 ---
 --- @type string
-local imageURL = "https://lnreader.org/assets/new/images/lnrlogo.png"
+local imageURL = "https://readlightnovel.online/assets/new/images/lnrlogo.png"
 
 --- Shosetsu tries to handle cloudflare protection if this is set to true.
 ---
@@ -156,9 +156,9 @@ local function shrinkURL(url, type)
 	-- Thus you would then program two substitutions, one to remove URL/novel/,
 	--  and one to remove URL/chapter/
 	if type == KEY_NOVEL_URL then
-		return url:gsub(".-lnreader.org", "")
+		return url:gsub(".-readlightnovel.online", "")
 	else
-		return url:gsub(".-lnreader.org", "")
+		return url:gsub(".-readlightnovel.online", "")
 	end
 end
 
