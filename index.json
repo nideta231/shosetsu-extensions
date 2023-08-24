@@ -51,6 +51,46 @@
       "md5": "c5977c9ba48c5115426fb3010cc65894"
     },
     {
+      "name": "Genesis Translations",
+      "fileName": "Genesistls",
+      "imageURL": "https://genesistls.com/wp-content/uploads/2022/04/logo.png",
+      "id": 95555,
+      "lang": "en",
+      "ver": "1.0.1",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Wattpad",
+      "fileName": "Wattpad",
+      "imageURL": "https://cdn-icons-png.flaticon.com/512/2111/2111715.png",
+      "id": 95556,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Neovel",
+      "fileName": "Neovel",
+      "imageURL": "https://neovel.io/apple-touch-icon.png",
+      "id": 95557,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "PawRead",
+      "fileName": "Pawread",
+      "imageURL": "https://res.pawread.com/images/logo/dmzj-phone.png",
+      "id": 95560,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
       "name": "Central Novel",
       "fileName": "CentralNovel",
       "id": 227675,
@@ -79,6 +119,16 @@
       "ver": "2.0.1",
       "libVer": "1.0.0",
       "md5": "ad8a6211419b89c1c9bda5d6cd07e19e"
+    },
+    {
+      "name": "Novelr18",
+      "fileName": "Novelr18",
+      "imageURL": "https://novelr18.com/wp-content/uploads/2017/10/logo_-1.png",
+      "id": 95561,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
     },
     {
       "name": "VipNovel",
