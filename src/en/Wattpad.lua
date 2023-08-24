@@ -1,4 +1,4 @@
--- {"id":95556,"ver":"1.0.0","libVer":"1.0.0","author":"Confident-hate"}
+-- {"id":95556,"ver":"1.0.1","libVer":"1.0.0","author":"Confident-hate"}
 local json = Require("dkjson")
 local baseURL = "https://www.wattpad.com"
 
@@ -80,7 +80,9 @@ end
 
 --- @param data table
 local function search(data)
-    local query = baseURL .. "/v4/search/stories?query=" .. data[QUERY] .. "&free=1&fields=stories(title,cover,url),nexturl&limit=50&mature=true"
+    local queryContent = data[QUERY]
+    local page = data[PAGE] - 1
+    local query = baseURL .. "/v4/search/stories?query=" .. queryContent .. "&free=1&fields=stories(title,cover,url),nexturl&limit=20&mature=true&offset=" .. page*20
     local response = RequestDocument(GET(query, nil, nil))
     response = json.decode(response:text())
 
@@ -141,12 +143,19 @@ local function parseNovel(novelURL)
 end
 
 local function parseListing(listingURL)
-    local document = GETDocument(listingURL)
-    return map(document:select("#browse-content #browse-results-item-view .browse-story-item"), function(v)
+    local response = RequestDocument(
+            RequestBuilder()
+                    :get()
+                    :url(listingURL)
+                    :addHeader("Authorization", "IwKhVmNM7VXhnsVb0BabhS")
+                    :build()
+    )
+    response = json.decode(response:text())
+    return map(response["stories"], function(v)
         return Novel {
-            title = v:selectFirst(".item .content .title"):text(),
-            imageURL = v:select(".item a img"):attr("src"),
-            link = shrinkURL(v:select(".item a"):attr("href"))
+            title = v.title,
+            link = shrinkURL(v.url),
+            imageURL = v.cover
         }
     end)
 end
@@ -155,7 +164,7 @@ end
 local function getListing(data)
     local genre = data[GENRE_FILTER]
     local orderBy = data[ORDER_BY_FILTER]
-
+    local page = data[PAGE] - 1
     local genreValue = ""
     local orderByValue = ""
     if genre ~= nil then
@@ -164,7 +173,12 @@ local function getListing(data)
     if orderBy ~= nil then
         orderByValue = ORDER_BY_VALUES[orderBy + 1]:lower()
     end
-    local url = baseURL .. "/stories/" .. genreValue  .. "/" .. orderByValue
+    local url = ""
+    if orderByValue == "hot" then
+        url = "https://api.wattpad.com/v5/hotlist?tags=" .. genreValue  .. "&language=1&limit=20&offset=" .. page*20
+    else
+        url = "https://www.wattpad.com/v4/stories?fields=stories%28id%2Cuser%28name%2Cavatar%2Cfullname%29%2Ctitle%2Ccover%2Cdescription%2Cmature%2Ccompleted%2CvoteCount%2CreadCount%2Ccategories%2Curl%2CnumParts%2Crankings%2CfirstPartId%2Ctags%2CisPaywalled%29%2CnextUrl%2Ctotal&filter=new&language=1&mature=0&query=%23" .. genreValue .. "&limit=20&offset=" .. page*20
+    end
     return parseListing(url)
 end
 
