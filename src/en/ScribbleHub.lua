@@ -1,4 +1,4 @@
--- {"id":86802,"ver":"1.0.3","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":86802,"ver":"1.0.4","libVer":"1.0.0","author":"TechnoJo4 StormX4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://www.scribblehub.com"
 local qs = Require("url").querystring
@@ -43,10 +43,6 @@ local function parse(doc)
 	end)
 end
 
-local function GETDoc(url)
-	return RequestDocument(GET(url, HEADERS))
-end
-
 return {
 	id = 86802,
 	name = "ScribbleHub",
@@ -61,7 +57,7 @@ return {
 							and data[FILTER_ORDER] + 1
 							or default_order[sort]
 
-			return parse(GETDoc(qs({
+			return parse(GETDocument(qs({
 				sort = sort, order = order
 			}, baseURL .. "/series-ranking/")))
 		end)
@@ -76,11 +72,11 @@ return {
 	expandURL = expandURL,
 
 	parseNovel = function(url, loadChapters)
-		local doc = GETDoc(baseURL.."/series/"..url.."/a/")
-		local wrap = doc:selectFirst(".wi_fic_wrap")
-		local novel = wrap:selectFirst(".novel-container")
-		local r = wrap:selectFirst(".wi-fic_r-content")
-		local s = r:selectFirst(".copyright ul"):children()
+		local doc = GETDocument(baseURL.."/series/"..url.."/a/"):selectFirst(".site-content-contain")
+		local novel = doc:selectFirst("div[typeof=Book]")
+		local wrap = novel:selectFirst(".box_fictionpage")
+		local s = doc:selectFirst(".copyright ul"):children()
+		
 		s = s:get(s:size() - 1):children()
 		s = s:get(s:size() - 1)
 		s = s:ownText()
@@ -97,11 +93,11 @@ return {
 		local text = function(v) return v:text() end
 		local info = NovelInfo {
 			title = novel:selectFirst(".fic_title"):text(),
-			imageURL = novel:selectFirst(".novel-cover img"):attr("src"),
+			imageURL = novel:selectFirst(".fic_image img"):attr("src"),
 			description = wrap:selectFirst(".wi_fic_desc"):text(),
 			genres = map(wrap:selectFirst(".wi_fic_genre"):select("a"), text),
 			tags = map(wrap:selectFirst(".wi_fic_showtags"):select("a"), text),
-			authors = { r:selectFirst("div[property=author] .auth_name_fic"):text() },
+			authors = { novel:selectFirst("span[property=author] .auth_name_fic"):text() },
 			status = s
 		}
 
@@ -124,7 +120,7 @@ return {
 	end,
 
 	getPassage = function(url)
-		local chap = GETDoc(expandURL(url)):getElementById("main read chapter")
+		local chap = GETDocument(expandURL(url)):getElementById("main read chapter")
 		local title = chap:selectFirst(".chapter-title"):text()
 		chap = chap:getElementById("chp_raw")
 
@@ -149,7 +145,7 @@ return {
 	end,
 
 	search = function(data)
-		return parse(GETDoc(qs({
+		return parse(GETDocument(qs({
 			s = data[QUERY], post_type = "fictionposts"
 		}, baseURL .. "/")))
 	end,
