@@ -1,6 +1,6 @@
--- {"id":4501,"ver":"1.0.3","libVer":"1.0.0","author":"MechTechnology"}
+-- {"id":4501,"ver":"1.0.4","libVer":"1.0.0","author":"MechTechnology"}
 
-return Require("Madara")("https://arenascan.com", {
+return Require("Madara")("https://novelxs.com", {
 	id = 4501,
 	name = "Team X Novel",
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/TeamXNovel.png",

@@ -211,16 +211,6 @@
       "md5": "d2edddc58222392b59ed34b73e25d6b2"
     },
     {
-      "name": "NovelHard",
-      "fileName": "NovelTrench",
-      "imageURL": "https://novelhard.com/wp-content/uploads/2019/08/novelhard.com_-1.png",
-      "id": 81,
-      "lang": "en",
-      "ver": "2.1.3",
-      "libVer": "1.0.0",
-      "md5": ""
-    },
-    {
       "name": "WoopRead",
       "fileName": "Woopread",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/WoopRead.png",
@@ -245,16 +235,6 @@
       "fileName": "SleepyTranslations",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/SleepyTranslations.png",
       "id": 4222,
-      "lang": "en",
-      "ver": "1.0.3",
-      "libVer": "1.0.0",
-      "md5": ""
-    },
-    {
-      "name": "Eternal Translation",
-      "fileName": "EternalTranslation",
-      "imageURL": "http://github.com/shosetsuorg/extensions/raw/dev/icons/EternalTranslation.png",
-      "id": 4224,
       "lang": "en",
       "ver": "1.0.3",
       "libVer": "1.0.0",
@@ -336,7 +316,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/TeamXNovel.png",
       "id": 4501,
       "lang": "ar",
-      "ver": "1.0.3",
+      "ver": "1.0.4",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -391,16 +371,6 @@
       "md5": "c4a2b8bfb6e6103ad0c8615fb6602bbe"
     },
     {
-      "name": "KobatoChanDaiSuki",
-      "fileName": "KobatoChan",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/KobatoChan.png",
-      "id": 74485,
-      "lang": "en",
-      "ver": "1.1.1",
-      "libVer": "1.0.0",
-      "md5": ""
-    },
-    {
       "name": "ScribbleHub",
       "fileName": "ScribbleHub",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/ScribbleHub.png",
@@ -446,7 +416,7 @@
       "imageURL": "https://novelnb.net/assets/css/img/logo.png",
       "id": 1781,
       "lang": "en",
-      "ver": "1.0.5",
+      "ver": "1.0.6",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -456,17 +426,17 @@
       "imageURL": "https://asuralightnovel.com/wp-content/uploads/2017/10/asura-light-novel-logo-4-e1627846850601.png",
       "id": 1783,
       "lang": "en",
-      "ver": "1.0.2",
+      "ver": "1.0.3",
       "libVer": "1.0.0",
       "md5": ""
     },
     {
-      "name": "Light Novel Reader",
+      "name": "Read Light Novel.app",
       "fileName": "LightNovelReader",
       "imageURL": "https://readlightnovel.online/assets/new/images/lnrlogo.png",
       "id": 1784,
       "lang": "en",
-      "ver": "1.0.4",
+      "ver": "1.0.5",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -541,26 +511,6 @@
       "md5": ""
     },
     {
-      "name": "Many Novel",
-      "fileName": "Latestnovel",
-      "imageURL": "https://manynovel.net/wp-content/themes/madara/images/logo.png",
-      "id": 2672381,
-      "lang": "en",
-      "ver": "1.0.1",
-      "libVer": "1.0.0",
-      "md5": ""
-    },
-    {
-      "name": "Novel Team",
-      "fileName": "Novelteam",
-      "imageURL": "https://novelteam.net/wp-content/themes/madara/images/logo.png",
-      "id": 724098,
-      "lang": "en",
-      "ver": "1.0.1",
-      "libVer": "1.0.0",
-      "md5": ""
-    },
-    {
       "name": "Nocturne Translations",
       "fileName": "Nocturnetls",
       "imageURL": "https://nocturnetls.net/wp-content/uploads/2017/10/nocturne_mask-with-sheen.png",
@@ -631,22 +581,12 @@
       "md5": ""
     },
     {
-      "name": "Novel.tl",
-      "fileName": "NovelTl",
-      "imageURL": "https://novel.tl/logo.png",
-      "id": 712,
-      "lang": "ru",
-      "ver": "1.0.0",
-      "libVer": "1.0.0",
-      "md5": ""
-    },
-    {
-      "name": "Novelcake",
+      "name": "Novel Cake",
       "fileName": "novelcake",
       "imageURL": "https://novelcake.com/wp-content/uploads/2017/10/NOVELCAKE_2.png",
       "id": 75,
       "lang": "en",
-      "ver": "1.0.7",
+      "ver": "1.0.8",
       "libVer": "1.0.0",
       "md5": ""
     },
