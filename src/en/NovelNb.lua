@@ -1,4 +1,4 @@
--- {"id":1781,"ver":"1.0.5","libVer":"1.0.0","author":"Xanvial"}
+-- {"id":1781,"ver":"1.0.6","libVer":"1.0.0","author":"Xanvial"}
 local qs = Require("url").querystring
 
 local defaults = {
@@ -144,25 +144,25 @@ function defaults:parseList(url)
 	end)
 end
 
---https://novelnb.net/search?q=sample&page=1
+--https://novel35.com/search?q=sample&page=1
 --- @return Novel[]
 function defaults:search(data)
 	return self.parseList(qs({ q = data[QUERY], page = data[PAGE] }, self.baseURL .. "/search"))
 end
 
---https://novelnb.net/list/hot-novel?page=1
+--https://novel35.com/list/hot-novel?page=1
 --- @return Novel[]
 function defaults:hotList(data)
 	return self.parseList(self.baseURL .. self.hot .. "?page="  .. data[PAGE])
 end
 
---https://novelnb.net/list/latest-release-novel?page=1
+--https://novel35.com/list/latest-release-novel?page=1
 --- @return Novel[]
 function defaults:latestList(data)
 	return self.parseList(self.baseURL .. self.latest .. "?page="  .. data[PAGE])
 end
 
---https://novelnb.net/list/completed-novel?page=1
+--https://novel35.com/list/completed-novel?page=1
 --- @return Novel[]
 function defaults:completedList(data)
 	return self.parseList(self.baseURL .. self.completed .. "?page="  .. data[PAGE])
@@ -186,7 +186,7 @@ local function novelData(baseURL, _self)
 	return _self
 end
 
-return novelData("https://novelnb.net", {
+return novelData("https://novel35.com", {
 	id = 1781,
 	name = "Novel Nb",
 	imageURL = "https://novelnb.net/assets/css/img/logo.png",
