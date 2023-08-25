@@ -61,6 +61,16 @@
       "md5": ""
     },
     {
+      "name": "Read From Net",
+      "fileName": "ReadFromNet",
+      "imageURL": "https://static.readfrom.net//templates/gray_search/images/logo41.png",
+      "id": 95562,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
       "name": "Wattpad",
       "fileName": "Wattpad",
       "imageURL": "https://cdn-icons-png.flaticon.com/512/2111/2111715.png",
