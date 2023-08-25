@@ -1,11 +1,11 @@
--- {"id":75,"ver":"1.0.7","libVer":"1.0.0","author":"Doomsdayrs, AbhiTheModder","dep":["Madara>=2.2.0"]}
+-- {"id":75,"ver":"1.0.8","libVer":"1.0.0","author":"Doomsdayrs, AbhiTheModder","dep":["Madara>=2.2.0"]}
 
 return Require("Madara")("https://novelcake.com", {
   id = 75,
   name = "Novelcake",
   imageURL = "https://novelcake.com/wp-content/uploads/2017/10/NOVELCAKE_2.png",
-  shrinkURLNovel = "series",
-  novelListingURLPath = "series",
+  shrinkURLNovel = "novel",
+  novelListingURLPath = "manga",
   latestNovelSel = "div.col-12.col-md-6",
   chaptersScriptLoaded = true,
   hasSearch = true,
