@@ -2,7 +2,7 @@
 
 return Require("Madara")("https://novelcake.com", {
   id = 75,
-  name = "Novelcake",
+  name = "Novel Cake",
   imageURL = "https://novelcake.com/wp-content/uploads/2017/10/NOVELCAKE_2.png",
   shrinkURLNovel = "novel",
   novelListingURLPath = "manga",
