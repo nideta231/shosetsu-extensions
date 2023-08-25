@@ -1,4 +1,4 @@
--- {"id":1784,"ver":"1.0.4","libVer":"1.0.0","author":"Xanvial"}
+-- {"id":1784,"ver":"1.0.5","libVer":"1.0.0","author":"Xanvial"}
 
 local json = Require("dkjson")
 
@@ -16,15 +16,15 @@ local id = 1784
 --- Required.
 ---
 --- @type string
-local name = "Light Novel Reader"
+local name = "Read Light Novel.app"
 
 --- Base URL of the extension. Used to open web view in Shosetsu.
 ---
 --- Required.
 ---
 --- @type string
-local baseURL = "https://readlightnovel.online/"
-
+local baseURL = "https://readlightnovel.app/"
+--
 --- URL of the logo.
 ---
 --- Optional, Default is empty.
@@ -148,18 +148,7 @@ local listings = {
 --- @param type int Either KEY_CHAPTER_URL or KEY_NOVEL_URL.
 --- @return string Shrunk URL.
 local function shrinkURL(url, type)
-	-- Currently the two branches are the same.
-	-- You can simplify this to just a return with a single substitution.
-	-- But some websites separate novels & chapters.
-	--  So a novel is URL/novel/12345,
-	--  And a chapter is URL/chapter/12345.
-	-- Thus you would then program two substitutions, one to remove URL/novel/,
-	--  and one to remove URL/chapter/
-	if type == KEY_NOVEL_URL then
-		return url:gsub(".-readlightnovel.online", "")
-	else
-		return url:gsub(".-readlightnovel.online", "")
-	end
+	return url:gsub(baseURL, "")
 end
 
 --- Expand a given URL.
@@ -170,14 +159,7 @@ end
 --- @param type int Either KEY_CHAPTER_URL or KEY_NOVEL_URL.
 --- @return string Full URL.
 local function expandURL(url, type)
-	-- Currently the two branches are the same.
-	-- Read [shrinkURL] documentation in regards to what you should do.
-	-- Hint, this is the opposite.
-	if type == KEY_NOVEL_URL then
-		return baseURL .. url
-	else
-		return baseURL .. url
-	end
+	return baseURL .. url
 end
 
 --- Get a chapter passage based on its chapterURL.
