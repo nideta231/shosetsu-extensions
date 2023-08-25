@@ -371,16 +371,6 @@
       "md5": "c4a2b8bfb6e6103ad0c8615fb6602bbe"
     },
     {
-      "name": "KobatoChanDaiSuki",
-      "fileName": "KobatoChan",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/KobatoChan.png",
-      "id": 74485,
-      "lang": "en",
-      "ver": "1.1.1",
-      "libVer": "1.0.0",
-      "md5": ""
-    },
-    {
       "name": "ScribbleHub",
       "fileName": "ScribbleHub",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/ScribbleHub.png",
