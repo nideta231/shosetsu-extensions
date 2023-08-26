@@ -125,7 +125,7 @@ local function getListing(data)
 end
 
 return {
-    id = 95562,
+    id = 95563,
     name = "Comrademao",
     baseURL = baseURL,
     imageURL = "https://i.imgur.com/N6KcMJ4.png",
