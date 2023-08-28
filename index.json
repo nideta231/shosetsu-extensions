@@ -51,6 +51,16 @@
       "md5": "c5977c9ba48c5115426fb3010cc65894"
     },
     {
+      "name": "Quotev",
+      "fileName": "Quotev",
+      "imageURL": "https://i.quotev.com/q/qmz192.png",
+      "id": 95552,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
       "name": "Genesis Translations",
       "fileName": "Genesistls",
       "imageURL": "https://genesistls.com/wp-content/uploads/2022/04/logo.png",
