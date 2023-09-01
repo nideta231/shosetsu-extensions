@@ -1,4 +1,4 @@
--- {"id":95560,"ver":"1.0.0","libVer":"1.0.0","author":"Confident-hate"}
+-- {"id":95560,"ver":"1.0.1","libVer":"1.0.0","author":"Confident-hate"}
 
 local baseURL = "https://m.pawread.com"
 
@@ -161,7 +161,7 @@ local function parseNovel(novelURL)
     local document = GETDocument(url)
 
     return NovelInfo {
-        title = document:selectFirst(".BarTit"):text(),
+        title = document:selectFirst("h1"):text(),
         description = document:selectFirst("#full-des"):text(),
         imageURL = document:selectFirst("#Cover>img"):attr("src"),
         status = ({
@@ -169,7 +169,8 @@ local function parseNovel(novelURL)
             Completed = NovelStatus.COMPLETED,
         })[document:selectFirst(".txtItme a"):text()],
         authors = { document:selectFirst("p.txtItme:nth-child(2)"):text()},
-        genres = map(document:select(".tag_list a"), text ),
+        genres = map(document:select(".genre_list a"), text ),
+        tags = map(document:select(".tag_list a"), text ),
         chapters = AsList(
                 map(document:select(".comic-chapters .chapter-warp li"), function(v)
                     return NovelChapter {
