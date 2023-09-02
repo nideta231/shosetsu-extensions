@@ -1,4 +1,4 @@
--- {"id":95561,"ver":"1.0.0","libVer":"1.0.0","author":"Confident-hate"}
+-- {"id":95561,"ver":"1.0.1","libVer":"1.0.0","author":"Confident-hate"}
 
 local baseURL = "https://novelr18.com"
 
@@ -17,7 +17,7 @@ end
 ---@param url string
 ---@param type int
 local function expandURL(url)
-    return baseURL .. url
+    return baseURL .. "/" .. url
 end
 
 local SORT_BY_FILTER_KEY = 5
@@ -94,7 +94,9 @@ local function parseNovel(novelURL)
     local url = baseURL .. "/" .. novelURL
     local document = GETDocument(url)
     document:select(".ai-rotate"):remove()
-    local chapterOrder = document:select(".listing-chapters_wrap ul li"):size()
+    local chapterURL = url .. "ajax/chapters/"
+    local chapterDoc = RequestDocument(POST(chapterURL, nil, nil))
+    local chapterOrder = chapterDoc:select(".wp-manga-chapter"):size()
     return NovelInfo {
         title = document:selectFirst("h1"):text(),
         description = parseNovelDescription(document),
@@ -108,7 +110,7 @@ local function parseNovel(novelURL)
         authors = { document:selectFirst(".author-content"):text()},
         genres = map(document:select(".genres-content a"), text ),
         chapters = AsList(
-                map(document:select(".listing-chapters_wrap ul li"), function(v)
+                map(chapterDoc:select(".wp-manga-chapter"), function(v)
                     chapterOrder = chapterOrder - 1
                     return NovelChapter {
                         order = chapterOrder,
@@ -169,6 +171,7 @@ return {
     getPassage = getPassage,
     chapterType = ChapterType.HTML,
     search = search,
+    hasCloudFlare = true,
     shrinkURL = shrinkURL,
     expandURL = expandURL,
     searchFilters = searchFilters
