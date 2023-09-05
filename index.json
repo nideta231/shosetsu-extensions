@@ -101,6 +101,16 @@
       "md5": ""
     },
     {
+      "name": "Honeyfeed",
+      "fileName": "Honeyfeed",
+      "imageURL": "https://www.honeyfeed.fm/assets/main/pages/home/logo-honey-bomon-70595250eae88d365db99bd83ecdc51c917f32478fa535a6b3b6cffb9357c1b4.png",
+      "id": 95565,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
       "name": "Wattpad",
       "fileName": "Wattpad",
       "imageURL": "https://cdn-icons-png.flaticon.com/512/2111/2111715.png",
