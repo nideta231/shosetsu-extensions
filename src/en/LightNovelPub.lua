@@ -1,4 +1,4 @@
--- {"id":31,"ver":"1.0.0","libVer":"1.0.0","author":"Gta-Cool"}
+-- {"id":31,"ver":"1.0.1","libVer":"1.0.0","author":"Gta-Cool"}
 
 local json = Require("dkjson")
 
@@ -323,7 +323,7 @@ local function parseNovel(novelURL)
             return nat:text()
         end
     ))
-    ni:setImageURL(document:selectFirst(".cover img"):attr("src"))
+    ni:setImageURL(document:selectFirst(".cover img"):attr("data-src"))
     ni:setDescription(table.concat(
         map(
             document:select(".summary .content p"),
@@ -425,7 +425,7 @@ local function search(data)
             local n = Novel()
             n:setTitle(nia:selectFirst(".item-body .novel-title"):text())
             n:setLink(shrinkURL(baseURL .. nia:attr("href"):sub(2), KEY_NOVEL_URL))
-            n:setImageURL(nia:selectFirst(".novel-cover img"):attr("data-src"))
+            n:setImageURL(nia:selectFirst(".novel-cover img"):attr("src"))
             return n
         end
     )
