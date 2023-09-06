@@ -111,6 +111,16 @@
       "md5": ""
     },
     {
+      "name": "NovelBuddy",
+      "fileName": "Novelbuddy",
+      "imageURL": "https://novelbuddy.com/static/sites/novelbuddy/icons/apple-touch-icon.png",
+      "id": 95566,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
       "name": "Wattpad",
       "fileName": "Wattpad",
       "imageURL": "https://cdn-icons-png.flaticon.com/512/2111/2111715.png",
