@@ -29,7 +29,7 @@ local ORDER_BY_PARAMS = {"", "update", "latest", "popular", "title", "titlerever
 
 local searchFilters = {
     DropdownFilter(STATUS_FILTER_KEY, "Status", STATUS_FILTER_VALUES),
-    DropdownFilter(ORDER_BY_FILTER_KEY, "Type", ORDER_BY_FILTER_VALUES)
+    DropdownFilter(ORDER_BY_FILTER_KEY, "Order By", ORDER_BY_FILTER_VALUES)
 }
 
 --- @param chapterURL string @url of the chapter
