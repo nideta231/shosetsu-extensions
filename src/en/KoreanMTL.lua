@@ -1,4 +1,4 @@
--- {"id":95569,"ver":"1.0.1","libVer":"1.0.0","author":"Confident-hate"}
+-- {"id":95569,"ver":"1.0.0","libVer":"1.0.0","author":"Confident-hate"}
 
 local baseURL = "https://www.koreanmtl.online"
 
@@ -48,7 +48,6 @@ local function parseNovel(novelURL)
     return NovelInfo {
         title = document:selectFirst(".post-title.entry-title"):text(),
         description = table.concat(map(document:selectFirst(".post-body"):select("p"), text), "\n"),
-        imageURL = "https://i.imgur.com/oeI3m0e.png",
         chapters = AsList(
             map(document:select(".a li"), function(v)
                 return NovelChapter {

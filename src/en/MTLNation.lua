@@ -1,4 +1,4 @@
--- {"id":95568,"ver":"1.0.1","libVer":"1.0.0","author":"Confident-hate"}
+-- {"id":95568,"ver":"1.0.0","libVer":"1.0.0","author":"Confident-hate"}
 local json = Require("dkjson")
 local baseURL = "https://mtlnation.com"
 
