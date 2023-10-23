@@ -1,4 +1,4 @@
--- {"id":4302,"ver":"1.0.14","libVer":"1.0.0","author":"MechTechnology"}
+-- {"id":4302,"ver":"1.0.15","libVer":"1.0.0","author":"MechTechnology"}
 
 local baseURL = "https://travistranslations.com"
 
@@ -90,6 +90,42 @@ local function expandURL(url)
 	return baseURL .. url
 end
 
+local function startsWith(data, start)
+    return data:sub(1, #start) == start
+end
+
+--- @param imgSrc string
+--- @return string
+local function prependImageUrl(imgSrc)
+	if startsWith(imgSrc, "http") then
+		return imgSrc
+	end
+
+	-- Check if starting with //
+	if startsWith(imgSrc, "//") then
+		return "https:" .. imgSrc
+	end
+	if startsWith(imgSrc, "/") then
+		return "https://travistranslations.com" .. imgSrc
+	end
+
+	return "https://travistranslations.com/" .. imgSrc
+end
+
+--- @param imgEl Element
+local function getImageUrl(imgEl)
+	local src = imgEl:attr("data-src")
+	-- Check if data-src is available
+	if src:len() > 0 then
+		return prependImageUrl(src)
+	end
+	src = imgEl:attr("src")
+	if src:len() > 0 then
+		return prependImageUrl(src)
+	end
+	return nil
+end
+
 local function getPassage(chapterURL)
 	local chap = GETDocument(expandURL(chapterURL)):selectFirst("main#primary")
 	local title = chap:selectFirst("h2"):text()
@@ -117,7 +153,7 @@ local function parseNovel(novelURL, loadChapters)
 	
 	local info = NovelInfo {
 		title = content:selectFirst("h1#heading"):attr("title"),
-		imageURL = "https:" .. content:selectFirst("img"):attr("data-src"),
+		imageURL = getImageUrl(content:selectFirst("img")),
 		status = ({
 			Completed = NovelStatus.COMPLETED,
 			Ongoing = NovelStatus.PUBLISHING
@@ -155,7 +191,7 @@ local function parseListing(listingURL)
 		return Novel {
 			title = a:attr("title"),
 			link = shrinkURL(a:attr("href")),
-			imageURL = "https:" .. v:selectFirst("figure"):selectFirst("img"):attr("data-src")
+			imageURL = getImageUrl(v:selectFirst("figure"):selectFirst("img"))
 		}
 	end)
 end
