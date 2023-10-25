@@ -66,7 +66,7 @@
       "imageURL": "https://genesistls.com/wp-content/uploads/2022/04/logo.png",
       "id": 95555,
       "lang": "en",
-      "ver": "1.0.1",
+      "ver": "1.0.2",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -115,6 +115,36 @@
       "fileName": "Novelbuddy",
       "imageURL": "https://novelbuddy.com/static/sites/novelbuddy/icons/apple-touch-icon.png",
       "id": 95566,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "NobleMTL",
+      "fileName": "NobleMTL",
+      "imageURL": "https://i1.wp.com/noblemtl.com/wp-content/uploads/2022/07/cropped-Noble-270x270.png",
+      "id": 95567,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "MTLNation",
+      "fileName": "MTLNation",
+      "imageURL": "https://i.imgur.com/jmwgTRw.png",
+      "id": 95568,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "KoreanMTL",
+      "fileName": "KoreanMTL",
+      "imageURL": "https://i.imgur.com/Zsvoiom.png",
+      "id": 95569,
       "lang": "en",
       "ver": "1.0.0",
       "libVer": "1.0.0",
