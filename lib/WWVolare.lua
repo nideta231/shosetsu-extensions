@@ -1,4 +1,4 @@
--- {"ver":"1.2.1","author":"TechnoJo4","dep":["dkjson","CommonCSS"]}
+-- {"ver":"1.2.2","author":"TechnoJo4","dep":["dkjson","CommonCSS"]}
 
 local css = Require("CommonCSS").table
 
@@ -100,6 +100,9 @@ return function(id, name, base, contentSel, image)
 		updateSetting = function() end,
 		expandURL = function(url, type)
 			return type == KEY_NOVEL_URL and base.."/novel/"..url or base..url
+		end,
+		shrinkURL = function(url, type)
+			return url
 		end
 	}
 end
