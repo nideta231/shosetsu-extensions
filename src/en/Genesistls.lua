@@ -1,4 +1,4 @@
--- {"id":95555,"ver":"1.0.2","libVer":"1.0.0","author":"Confident-hate"}
+-- {"id":95555,"ver":"1.0.3","libVer":"1.0.0","author":"Confident-hate"}
 
 local baseURL = "https://genesistls.com"
 
@@ -119,17 +119,6 @@ local css = [[
     .genesistls-watermark {
         position: fixed;
         opacity: 0;
-    }
-    
-    p.a {
-        text-indent: 2em;
-    }
-    
-    p {
-    
-    
-        margin: 24px 0;
-        line-height: 200%;
     }
     
     .game-prompt-gold-info {
