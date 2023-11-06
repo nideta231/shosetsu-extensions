@@ -1,4 +1,4 @@
--- {"id":95556,"ver":"1.0.1","libVer":"1.0.0","author":"Confident-hate"}
+-- {"id":95556,"ver":"1.0.3","libVer":"1.0.0","author":"Confident-hate"}
 local json = Require("dkjson")
 local baseURL = "https://www.wattpad.com"
 
@@ -46,9 +46,14 @@ local GENRE_VALUES = {
   "Werewolf"
 }
 
+local STATUS_FILTER_KEY = 4
+local STATUS_VALUES = { "All", "Completed"}
+local STATUS_PARAMS = {"", "&filter=complete"}
+
 local searchFilters = {
     DropdownFilter(GENRE_FILTER, "Genre", GENRE_VALUES),
-    DropdownFilter(ORDER_BY_FILTER, "Order by", ORDER_BY_VALUES)
+    DropdownFilter(ORDER_BY_FILTER, "Order by", ORDER_BY_VALUES),
+    DropdownFilter(STATUS_FILTER_KEY, "Status (only works with search)", STATUS_VALUES)
 }
 
 local encode = Require("url").encode
@@ -59,41 +64,74 @@ local encode = Require("url").encode
 local function getPassage(chapterURL)
     local url = baseURL .. chapterURL
     local htmlElement = GETDocument(url)
-    htmlElement = htmlElement:selectFirst(".row.part-content .panel.panel-reading")
-    htmlElement:select("button"):remove()
-    htmlElement:select("br"):remove()
-    local toRemove = {}
-    htmlElement:traverse(NodeVisitor(function(v)
-        if v:tagName() == "p" and v:text() == "" then
-            toRemove[#toRemove+1] = v
+    local title = htmlElement:selectFirst("header h1"):text()
+    local chapterPages = string.match(htmlElement:html(), ".*pages.:([0-9]*).*")
+    local ht = "<h1>" .. title .. "</h1>"
+    for i = 1,chapterPages,1 do
+        local pTagList = ""
+        htmlElement = GETDocument(url .. "/page/" .. i)
+        htmlElement = htmlElement:selectFirst(".row.part-content .panel.panel-reading")
+        htmlElement:select("button"):remove()
+        htmlElement:select("br"):remove()
+        local toRemove = {}
+        htmlElement:traverse(NodeVisitor(function(v)
+            if v:tagName() == "p" and v:text() == "" then
+                toRemove[#toRemove+1] = v
+            end
+        end, nil, true))
+        for _,v in pairs(toRemove) do
+            v:remove()
         end
-    end, nil, true))
-    for _,v in pairs(toRemove) do
-        v:remove()
+        pTagList = map(htmlElement:select("p"), text)
+        ht = ht .. "-----------------"
+        for k,v in pairs(pTagList) do ht = ht .. "<br><br>" .. v end
+        ht = ht .. "<br><br>-----------------"
     end
-    local ht = ""
-    local pTagList = ""
-    pTagList = map(htmlElement:select("p"), text)
-    for k,v in pairs(pTagList) do ht = ht .. "<br><br>" .. v end
     return pageOfElem(Document(ht), true)
 end
 
 --- @param data table
 local function search(data)
     local queryContent = data[QUERY]
-    local page = data[PAGE] - 1
-    local query = baseURL .. "/v4/search/stories?query=" .. queryContent .. "&free=1&fields=stories(title,cover,url),nexturl&limit=20&mature=true&offset=" .. page*20
-    local response = RequestDocument(GET(query, nil, nil))
-    response = json.decode(response:text())
+    if string.find(queryContent, "https://www.wattpad.com/") then
+        local query = queryContent
+        --convert chapter url to story url
+        if not string.find(query, "/story/") then
+            query = expandURL(GETDocument(query):selectFirst(".info .on-navigate"):attr("href"))
+        end
+        local document = RequestDocument(
+                RequestBuilder()
+                        :get()
+                        :url(query)
+                        :addHeader("Referer", "https://www.wattpad.com/")
+                        :build()
+        )
+        return map(document:select(".story-header"), function(v)
+            return Novel {
+            title = v:selectFirst(".story-info .sr-only"):text(),
+            link = shrinkURL(query),
+            imageURL = v:selectFirst(".story-cover img"):attr("src")
+            }
+        end)
+    else
+        local page = data[PAGE] - 1
+        local status = data[STATUS_FILTER_KEY]
+        local statusValue = ""
+        if status ~= nil then
+            statusValue = STATUS_PARAMS[status+1]
+        end
+        local query = baseURL .. "/v4/search/stories?query=" .. queryContent .. statusValue .. "&free=1&fields=stories(title,cover,url),nexturl&limit=20&mature=true&offset=" .. page*20
+        local response = RequestDocument(GET(query, nil, nil))
+        response = json.decode(response:text())
 
-    return map(response["stories"], function(v)
-        return Novel {
-            title = v.title,
-            link = shrinkURL(v.url),
-            imageURL = v.cover
-        }
-    end)
-
+        return map(response["stories"], function(v)
+            return Novel {
+                title = v.title,
+                link = shrinkURL(v.url),
+                imageURL = v.cover
+            }
+        end)
+    end
 end
 
 --- @param novelURL string @URL of novel
@@ -122,7 +160,7 @@ local function parseNovel(novelURL)
         status = ({
             Ongoing = NovelStatus.PUBLISHING,
             Complete = NovelStatus.COMPLETED,
-        })[document:select(".story-badges .tag-item"):text()],
+        })[document:selectFirst(".story-badges .tag-item"):text()],
         authors = { document:selectFirst(".author-info__username"):text() },
         genres = map(document:select(".tag-items li a"), text ),
         chapters = AsList(
@@ -175,7 +213,7 @@ local function getListing(data)
     end
     local url = ""
     if orderByValue == "hot" then
-        url = "https://api.wattpad.com/v5/hotlist?tags=" .. genreValue  .. "&language=1&limit=20&offset=" .. page*20
+        url = "https://api.wattpad.com/v5/hotlist?tags=" .. genreValue .. "&language=1&limit=20&offset=" .. page*20
     else
         url = "https://www.wattpad.com/v4/stories?fields=stories%28id%2Cuser%28name%2Cavatar%2Cfullname%29%2Ctitle%2Ccover%2Cdescription%2Cmature%2Ccompleted%2CvoteCount%2CreadCount%2Ccategories%2Curl%2CnumParts%2Crankings%2CfirstPartId%2Ctags%2CisPaywalled%29%2CnextUrl%2Ctotal&filter=new&language=1&mature=0&query=%23" .. genreValue .. "&limit=20&offset=" .. page*20
     end

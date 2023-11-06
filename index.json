@@ -151,12 +151,22 @@
       "md5": ""
     },
     {
+      "name": "Novelhall",
+      "fileName": "Novelhall",
+      "imageURL": "https://www.novelhall.com/statics/default/images/logo.b5b4c.png",
+      "id": 95570,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
       "name": "Wattpad",
       "fileName": "Wattpad",
       "imageURL": "https://cdn-icons-png.flaticon.com/512/2111/2111715.png",
       "id": 95556,
       "lang": "en",
-      "ver": "1.0.1",
+      "ver": "1.0.3",
       "libVer": "1.0.0",
       "md5": ""
     },
