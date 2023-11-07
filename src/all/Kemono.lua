@@ -1,14 +1,20 @@
--- {"id":93278,"ver":"1.0.0","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","dkjson>=1.0.0"]}
+-- {"id":93278,"ver":"1.0.1","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","dkjson>=1.0.0"]}
 
-local baseURL = "https://kemono.party"
-local apiURL = baseURL .. "/api"
+local baseURL = "https://kemono.su"
+local apiURL = baseURL .. "/api/v1"
 
 local json = Require("dkjson")
 
-local creators
+local _creators
+local function creators()
+    if not _creators then
+        _creators = json.GET(apiURL .. "/creators.txt")
+    end
+    return _creators
+end
 
 local function shrinkURL(url)
-    return url:gsub("^.-kemono%.party/?", "")
+    return url:gsub("^.-kemono%.party/?", ""):gsub("^.-kemono%.su/?", "")
 end
 
 local function expandURL(url)
@@ -33,34 +39,27 @@ return {
     id = 93278,
     name = "Kemono",
     baseURL = baseURL,
-    imageURL = "https://kemono.party/static/klogo.png",
+    imageURL = "https://kemono.su/static/klogo.png",
     hasSearch = true,
     chapterType = ChapterType.HTML,
 
     listings = {
         Listing("All", false, function(data)
-            if not creators then
-                creators = json.GET(apiURL .. "/creators")
-            end
-            return parseListing(creators)
+            return parseListing(creators())
         end),
         Listing("Favorites", false, function(data)
-            return parseListing(json.GET(apiURL .. "/v1/account/favorites"))
+            return parseListing(json.GET(apiURL .. "/account/favorites"))
         end)
     },
 
     getPassage = function(chapterURL)
-        local content = json.GET(apiURL .. chapterURL)[1].content
+        local content = json.GET(apiURL .. chapterURL).content
         return "<!DOCTYPE html><html><head></head><body>" .. content .. "</body></html>"
     end,
 
     parseNovel = function(novelURL, loadChapters)
-        if not creators then
-            creators = json.GET(apiURL .. "/creators")
-        end
-
         local name = novelURL
-        for _,v in pairs(creators) do
+        for _,v in pairs(creators()) do
             if novelURL == creatorURL(v) then
                 name = v.name
             end
@@ -96,15 +95,13 @@ return {
     end,
 
     search = function()
-        if not creators then
-            creators = json.GET(apiURL .. "/creators")
-        end
         if data[QUERY]:match("/user/") then
-            return parseListing(filter(creators, function(v)
+            return parseListing(filter(creators(), function(v)
                 return data[QUERY] == creatorURL(v)
             end))
         end
-        return parseListing(filter(creators, function(v)
+
+        return parseListing(filter(creators(), function(v)
             return v.name:match(data[QUERY])
         end))
     end,

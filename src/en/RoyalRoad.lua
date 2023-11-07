@@ -1,4 +1,4 @@
--- {"id":36833,"ver":"1.0.13","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":36833,"ver":"1.0.14","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://www.royalroad.com"
 local qs = Require("url").querystring
@@ -216,7 +216,8 @@ local function createFilterString(data)
 		orderBy = order,
 		dir = dir,
 		tagsAdd = tagsAdd,
-		tagsRemove = tagsRemove
+		tagsRemove = tagsRemove,
+		page = data[PAGE]
 	})
 end
 
@@ -367,34 +368,29 @@ return {
 		-- remove empty paragraphs & forced paragraph indents
 		local toRemove = {}
 		chap:traverse(NodeVisitor(function(v)
-			if v:tagName() == "p" or v:tagName() == "span" then
-				local nr = 0
-				local tnodes = v:textNodes()
-
-				-- remove whitespace at the start of the paragraph
-				for i=0,tnodes:size()-1 do
-					local tn = tnodes:get(i)
+			-- remove whitespace at the start of the paragraph
+			if v:tagName() == "p" or (v:parent():tagName() == "p" and v:elementSiblingIndex() == 0) then
+				local nodes = v:textNodes()
+				print(nodes)
+				if not nodes:isEmpty() then
+					local tn = nodes:get(0)
 					local o = tn:text()
 					local s = o:gsub("^[ \n ]+", "")
 
-					if o ~= s then
+					if s == "" and nodes:size() == 1 then
+						toRemove[#toRemove+1] = v
+					elseif o ~= s then
 						tn:text(s)
 					end
-					if s ~= "" then
-						break
-					else
-						nr = nr + 1
-					end
-				end
-
-				-- remove empty paragraphs
-				if v:childNodeSize() == nr then
-					toRemove[#toRemove+1] = v
 				end
 			end
 
 			if v:hasAttr("border") then
 				v:removeAttr("border")
+			end
+
+			if v:hasAttr("align") then
+				v:removeAttr("align")
 			end
 
 			-- manually remove all style attributes except the useful ones
