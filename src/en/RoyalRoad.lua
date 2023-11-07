@@ -217,7 +217,7 @@ local function createFilterString(data)
 		dir = dir,
 		tagsAdd = tagsAdd,
 		tagsRemove = tagsRemove,
-		page = (data[PAGE] or 0)+1
+		page = data[PAGE]
 	})
 end
 
