@@ -1,4 +1,4 @@
--- {"id":701,"ver":"1.0.0","libVer":"1.0.0","author":"Rider21","dep":["dkjson>=1.0.1"]}
+-- {"id":701,"ver":"1.0.1","libVer":"1.0.0","author":"Rider21","dep":["dkjson>=1.0.1"]}
 
 local baseURL = "https://renovels.org"
 
@@ -24,7 +24,7 @@ local function getSearch(data)
 	local response = json.GET(expandURL(url))
 	return map(response["content"], function(v)
 		return Novel {
-			title = v.rus_name or v.en_name,
+			title = v.main_name or v.secondary_name,
 			link = v.dir,
 			imageURL = baseURL .. (v.img.high or v.img.mid or v.img.low)
 		}
@@ -43,7 +43,7 @@ local function parseNovel(novelURL, loadChapters)
 	local response = json.GET(expandURL("api/titles/" .. novelURL))
 
 	local novel = NovelInfo {
-		title = response.content.rus_name or response.content.en_name,
+		title = response.content.main_name or response.content.secondary_name,
 		genres = map(response.content.genres, function(v) return v.name end),
 		tags = map(response.content.categories, function(v) return v.name or v.name end),
 		imageURL = baseURL .. (response.content.img.high or response.content.img.mid or response.content.img.low),
@@ -106,7 +106,7 @@ return {
 			local response = json.GET(expandURL(url .. "&page=" .. data[PAGE]))
 			return map(response["content"], function(v)
 				return Novel {
-					title = v.rus_name or v.en_name,
+					title = v.main_name or v.secondary_name,
 					link = v.dir,
 					imageURL = baseURL .. (v.img.high or v.img.mid or v.img.low)
 				}
