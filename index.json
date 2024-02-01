@@ -646,7 +646,7 @@
       "imageURL": "https://ranobelib.me/icons/android-icon-192x192.png",
       "id": 73,
       "lang": "ru",
-      "ver": "1.0.1",
+      "ver": "1.0.2",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -656,7 +656,7 @@
       "imageURL": "https://jaomix.ru/wp-content/uploads/2019/08/cropped-logo-2.png",
       "id": 74,
       "lang": "ru",
-      "ver": "1.0.2",
+      "ver": "1.0.3",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -665,6 +665,16 @@
       "fileName": "Renovels",
       "imageURL": "https://gitlab.com/shosetsuorg/extensions/-/raw/dev/icons/Renovels.png",
       "id": 701,
+      "lang": "ru",
+      "ver": "1.0.1",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Novel.TL",
+      "fileName": "NovelTL",
+      "imageURL": "https://novel.tl/logo.png",
+      "id": 702,
       "lang": "ru",
       "ver": "1.0.0",
       "libVer": "1.0.0",

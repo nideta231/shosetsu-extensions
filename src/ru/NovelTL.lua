@@ -1,7 +1,7 @@
--- {"id":712,"ver":"1.0.0","libVer":"1.0.0","author":"Rider21","dep":["dkjson>=1.0.1"]}
+-- {"id":702,"ver":"1.0.0","libVer":"1.0.0","author":"Rider21","dep":["dkjson>=1.0.1","url>=1.0.0"]}
 
+local url = Require("url")
 local dkjson = Require("dkjson")
-
 local baseURL = "https://novel.tl"
 
 local function shrinkURL(url)
@@ -29,7 +29,8 @@ local function getSearch(data)
 
 	local requestTable = {
 		operationName = "Projects",
-		query = "query Projects($hostname:String! $filter:SearchFilter $page:Int $limit:Int){projects(section:{fullUrl:$hostname}filter:$filter page:{pageSize:$limit,pageNumber:$page}){content{title fullUrl covers{url}}}}",
+		query =
+		"query Projects($hostname:String! $filter:SearchFilter $page:Int $limit:Int){projects(section:{fullUrl:$hostname}filter:$filter page:{pageSize:$limit,pageNumber:$page}){content{title fullUrl covers{url}}}}",
 		variables = {
 			hostname = "novel.tl",
 			page = data[PAGE],
@@ -57,14 +58,10 @@ end
 
 local function getPassage(chapterURL)
 	local result = dkjson.POST("https://novel.tl/api/site/v2/graphql", {
-		operationName = "EReaderData",
-		query = "query EReaderData($url:String!,$chapterSelector:Selector!){project(project:{fullUrl:$url}){title url}chapter(chapter:$chapterSelector){title text{text}}}",
+		query = "query($url:String){chapter(chapter:{fullUrl:$url}){title text{text}}}",
 		variables = {
-			chapterSelector = {
-				fullUrl = chapterURL,
-			},
-			url = chapterURL,
-		}
+			url = url.decode(chapterURL),
+		},
 	})
 
 	local chap = Document(result.data.chapter.text.text)
@@ -82,7 +79,8 @@ end
 local function parseNovel(novelURL, loadChapters)
 	local result = dkjson.POST("https://novel.tl/api/site/v2/graphql", {
 		operationName = "Book",
-		query = 'query Book($url:String){project(project:{fullUrl:$url}){title translationStatus fullUrl covers{url}persons(langs:["ru","en","*"],roles:["author","illustrator"]){role name{firstName lastName}}genres{nameRu nameEng}tags{nameRu nameEng}annotation{text}subprojects{content{title volumes{content{url shortName chapters{title publishDate fullUrl published}}}}}}}',
+		query =
+		'query Book($url:String){project(project:{fullUrl:$url}){title translationStatus fullUrl covers{url}persons(langs:["ru","en","*"],roles:"author"){role name{firstName lastName}}genres{nameRu nameEng}tags{nameRu nameEng}annotation{text}subprojects{content{title volumes{content{shortName chapters{title publishDate fullUrl published}}}}}}}',
 		variables = {
 			url = novelURL,
 		}
@@ -100,9 +98,20 @@ local function parseNovel(novelURL, loadChapters)
 			result.data.project.translationStatus == "active" and 0 or 3
 		)
 	}
+
 	if #result.data.project.persons > 0 then
 		novel:setAuthors(map(result.data.project.persons, function(v)
-			return (v.name.firstName .. " " .. v.name.lastName)
+			local authorName = ""
+			if v.name then
+				if v.name.firstName and v.name.lastName then
+					authorName = v.name.firstName .. " " .. v.name.lastName
+				elseif v.name.firstName then
+					authorName = v.name.firstName
+				elseif v.name.lastName then
+					authorName = v.name.lastName
+				end
+			end
+			return authorName
 		end))
 	end
 
@@ -131,8 +140,8 @@ local function parseNovel(novelURL, loadChapters)
 end
 
 return {
-	id = 712,
-	name = "NovelTl",
+	id = 702,
+	name = "NovelTL",
 	baseURL = baseURL,
 	imageURL = "https://novel.tl/logo.png",
 	chapterType = ChapterType.HTML,
