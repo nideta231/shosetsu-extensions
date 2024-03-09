@@ -1,4 +1,4 @@
--- {"id":95556,"ver":"1.0.4","libVer":"1.0.0","author":"Confident-hate"}
+-- {"id":95556,"ver":"1.0.5","libVer":"1.0.0","author":"Confident-hate"}
 local json = Require("dkjson")
 local baseURL = "https://www.wattpad.com"
 
@@ -158,7 +158,7 @@ local function parseNovel(novelURL)
         if     v:selectFirst(".icon.completed"):text() == "Complete" then
             status = NovelStatus.COMPLETED
         elseif v:selectFirst(".icon.completed"):text() == "Ongoing" then
-            status = NovelStatus.ONGOING
+            status = NovelStatus.PUBLISHING
         end
     end
 
