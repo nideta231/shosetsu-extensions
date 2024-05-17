@@ -10,7 +10,6 @@ gradlew
 gradlew.bat
 gradle
 extension-tester.jar
-runServer.sh
 _doc.lua
 doc.js
 node_modules/
