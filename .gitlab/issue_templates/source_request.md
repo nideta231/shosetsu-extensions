@@ -34,3 +34,6 @@ Example:
 ## Additional notes
 
 <!-- Enter any additional notes you feel are important. -->
+
+<!-- DO NOT REMOVE THE FOLLOWING -->
+/label ~"Source Request"

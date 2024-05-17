@@ -39,3 +39,6 @@ Steps to reproduce the behavior:
 ## Additional notes
 
 <!-- Add any other notes about the problem here. -->
+
+<!-- DO NOT REMOVE THE FOLLOWING -->
+/label ~bug
