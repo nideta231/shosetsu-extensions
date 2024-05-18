@@ -1,6 +1,6 @@
--- {"id":4500,"ver":"1.0.4","libVer":"1.0.0","author":"MechTechnology","dep":["Madara>=2.3.2"]}
+-- {"id":4500,"ver":"1.0.5","libVer":"1.0.0","author":"MechTechnology","dep":["Madara>=2.3.2"]}
 
-return Require("Madara")("https://arnovel.me", {
+return Require("Madara")("https://ar-novel.com", {
 	id = 4500,
 	name = "ArNovel",
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/ArNovel.png",
