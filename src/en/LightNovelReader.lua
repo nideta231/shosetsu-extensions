@@ -1,4 +1,4 @@
--- {"id":1784,"ver":"1.0.5","libVer":"1.0.0","author":"Xanvial"}
+-- {"id":1784,"ver":"1.0.6","libVer":"1.0.0","author":"Xanvial"}
 
 local json = Require("dkjson")
 
@@ -23,7 +23,7 @@ local name = "Read Light Novel.app"
 --- Required.
 ---
 --- @type string
-local baseURL = "https://readlightnovel.app/"
+local baseURL = "https://readlitenovel.com/"
 --
 --- URL of the logo.
 ---

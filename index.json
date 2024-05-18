@@ -551,12 +551,12 @@
       "md5": ""
     },
     {
-      "name": "Read Light Novel.app",
+      "name": "Read Lite Novel.com",
       "fileName": "LightNovelReader",
-      "imageURL": "https://readlightnovel.online/assets/new/images/lnrlogo.png",
+      "imageURL": "https://readlitenovel.com/assets/new/images/new-lnrlogo.png",
       "id": 1784,
       "lang": "en",
-      "ver": "1.0.5",
+      "ver": "1.0.6",
       "libVer": "1.0.0",
       "md5": ""
     },
