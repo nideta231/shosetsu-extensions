@@ -1,4 +1,4 @@
--- {"id":93278,"ver":"1.0.1","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","dkjson>=1.0.0"]}
+-- {"id":93278,"ver":"1.0.2","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","dkjson>=1.0.0"]}
 
 local baseURL = "https://kemono.su"
 local apiURL = baseURL .. "/api/v1"
@@ -94,7 +94,7 @@ return {
         return info
     end,
 
-    search = function()
+    search = function(data)
         if data[QUERY]:match("/user/") then
             return parseListing(filter(creators(), function(v)
                 return data[QUERY] == creatorURL(v)
