@@ -1,4 +1,4 @@
--- {"id":95564,"ver":"1.0.0","libVer":"1.0.0","author":"Confident-hate"}
+-- {"id":95564,"ver":"1.0.1","libVer":"1.0.0","author":"Confident-hate"}
 
 local baseURL = "https://novelusb.com"
 
@@ -181,7 +181,7 @@ end
 local function parseNovel(novelURL)
     local url = baseURL .. "/" .. novelURL
     local document = GETDocument(url)
-    local chID = string.match(url, ".*novel.book/(.*)-novel")
+    local chID = string.match(url, ".*novel.book\/(.*)-")
     local chapterURL = baseURL .. "/ajax/chapter-archive?novelId=" .. chID
     local chapterDoc = GETDocument(chapterURL)
     return NovelInfo {
@@ -235,7 +235,7 @@ end
 
 return {
     id = 95564,
-    name = "Novelusb",
+    name = "Novel Bin",
     baseURL = baseURL,
     imageURL = "https://i.imgur.com/hq3eeIM.png",
     hasSearch = true,
