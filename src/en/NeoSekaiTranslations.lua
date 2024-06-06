@@ -1,4 +1,4 @@
--- {"id":8323,"ver":"1.0.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.2.0"]}
+-- {"id":8323,"ver":"1.0.1","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.2.0"]}
 
 return Require("Madara")("https://www.neosekaitranslations.com", {
 	id = 8323,
@@ -9,6 +9,7 @@ return Require("Madara")("https://www.neosekaitranslations.com", {
 	latestNovelSel = "div.col-12.col-md-4.badge-pos-1",
 	novelListingURLPath = "novels",
 	ajaxUsesFormData = true,
+	isSearchIncrementing = false,
 
 	genres = {
 		"Action",
