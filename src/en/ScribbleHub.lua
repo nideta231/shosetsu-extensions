@@ -1,4 +1,4 @@
--- {"id":86802,"ver":"1.0.4","libVer":"1.0.0","author":"TechnoJo4 StormX4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":86802,"ver":"1.0.5","libVer":"1.0.0","author":"TechnoJo4 StormX4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://www.scribblehub.com"
 local qs = Require("url").querystring
@@ -49,6 +49,7 @@ return {
 	baseURL = baseURL,
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/ScribbleHub.png",
 	chapterType = ChapterType.HTML,
+	hasCloudFlare = true,
 
 	listings = {
 		Listing("Novels", false, function(data)
