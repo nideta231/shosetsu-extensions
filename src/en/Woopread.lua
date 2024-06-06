@@ -1,4 +1,4 @@
--- {"id":4217,"ver":"2.2.0","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=2.2.0"]}
+-- {"id":4217,"ver":"2.2.1","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=2.2.0"]}
 
 return Require("Madara")("https://woopread.com", {
     id = 4217,
@@ -9,6 +9,7 @@ return Require("Madara")("https://woopread.com", {
     novelListingURLPath = "novellist",
     shrinkURLNovel = "series",
     searchHasOper = true,
+    hasCloudFlare = true,
 
     genres = {
         "Action",
