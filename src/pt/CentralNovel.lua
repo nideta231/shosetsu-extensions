@@ -1,4 +1,4 @@
--- {"id":227675,"ver":"1.0.0","libVer":"1.0.0","author":"Claudemirovsky","dep":["url>=1.0.0"]}
+-- {"id":227675,"ver":"1.0.1","libVer":"1.0.0","author":"Claudemirovsky","dep":["url>=1.0.0"]}
 
 -- ============================= CONSTANTS ==============================
 local id = 227675 -- from a good doujinshi
@@ -269,7 +269,7 @@ end
 ---@return Novel[]
 local function parseList(url)
   local document = GETDocument(url)
-  return map(document:select("div.listupd a.tip"), parseNovelFromElement)
+  return map(document:select("div.listupd div.mdthumb a.tip"), parseNovelFromElement)
 end
 
 ---@param listname string
