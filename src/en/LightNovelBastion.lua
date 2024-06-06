@@ -1,4 +1,4 @@
--- {"id":762,"ver":"2.1.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.2.0"]}
+-- {"id":762,"ver":"2.1.1","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.2.0"]}
 
 return Require("Madara")("https://lightnovelbastion.com", {
 	id = 762,
@@ -9,6 +9,7 @@ return Require("Madara")("https://lightnovelbastion.com", {
 	latestNovelSel = "div.col-6.col-md-3",
 	novelListingURLPath = "novels",
 	chaptersScriptLoaded = false,
+	isSearchIncrementing = false,
 
 	genres = {}
 })
