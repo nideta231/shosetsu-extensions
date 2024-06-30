@@ -1,6 +1,6 @@
 -- {"id":77,"ver":"1.0.3","libVer":"1.0.0","author":"Doomsdayrs, AbhiTheModder","dep":["Madara>=2.2.0"]}
 
-return Require("Madara")("https://sky-mtl.com", {
+return Require("Madara")("https://riwyatime.com", {
   id = 77,
   name = "Sky-mtl(novel-gate)",
   imageURL = "https://sky-mtl.com/wp-content/uploads/2017/10/10.png",
