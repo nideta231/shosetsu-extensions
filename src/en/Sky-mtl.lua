@@ -1,4 +1,4 @@
--- {"id":77,"ver":"1.0.3","libVer":"1.0.0","author":"Doomsdayrs, AbhiTheModder","dep":["Madara>=2.2.0"]}
+-- {"id":77,"ver":"1.0.4","libVer":"1.0.0","author":"Doomsdayrs, AbhiTheModder","dep":["Madara>=2.2.0"]}
 
 return Require("Madara")("https://riwyatime.com", {
   id = 77,
