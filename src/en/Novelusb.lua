@@ -1,4 +1,4 @@
--- {"id":95564,"ver":"1.0.1","libVer":"1.0.0","author":"Confident-hate"}
+-- {"id":95564,"ver":"1.0.2","libVer":"1.0.0","author":"Confident-hate"}
 
 local baseURL = "https://novelusb.com"
 
@@ -170,7 +170,7 @@ local function search(data)
     return map(doc:selectFirst(".list.list-novel"):select(".row"), function(v)
         return Novel {
             title = v:selectFirst(".novel-title"):text(),
-            imageURL = v:selectFirst(".cover"):attr("src"),
+            imageURL = v:selectFirst("img.cover"):attr("src"):gsub("_200_89", ""),
             link = shrinkURL(v:selectFirst(".novel-title a"):attr("href"))
         }
     end)
@@ -181,13 +181,13 @@ end
 local function parseNovel(novelURL)
     local url = baseURL .. "/" .. novelURL
     local document = GETDocument(url)
-    local chID = string.match(url, ".*novel.book\/(.*)-")
+    local chID = string.match(url, ".*novel.book/(.*)")
     local chapterURL = baseURL .. "/ajax/chapter-archive?novelId=" .. chID
     local chapterDoc = GETDocument(chapterURL)
     return NovelInfo {
         title = document:selectFirst(".title"):text(),
         description = document:selectFirst(".desc-text"):text(),
-        imageURL = document:selectFirst(".books .book img"):attr("src"),
+        imageURL = document:selectFirst(".books .book img"):attr("data-src"),
         status = ({
             Ongoing = NovelStatus.PUBLISHING,
             Completed = NovelStatus.COMPLETED,
@@ -209,7 +209,7 @@ local function parseListing(listingURL)
     return map(document:selectFirst(".list.list-novel"):select(".row"), function(v)
         return Novel {
             title = v:selectFirst(".novel-title"):text(),
-            imageURL = v:selectFirst(".cover"):attr("src"),
+            imageURL = v:selectFirst("img.cover"):attr("data-src"):gsub("_200_89", ""),
             link = shrinkURL(v:selectFirst(".novel-title a"):attr("href"))
         }
     end)
