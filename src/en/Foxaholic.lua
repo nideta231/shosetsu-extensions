@@ -1,4 +1,4 @@
--- {"id":173,"ver":"2.1.2","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=2.2.0"]}
+-- {"id":173,"ver":"2.1.4","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=2.2.0"]}
 
 return Require("Madara")("https://www.foxaholic.com", {
 	id = 173,
@@ -7,7 +7,7 @@ return Require("Madara")("https://www.foxaholic.com", {
 	hasCloudFlare = true,
 
 	-- defaults values
-	latestNovelSel = "div.col-12.col-md-3.badge-pos-2",
+	latestNovelSel = "div.col-6.col-md-3.badge-pos-2",
 
 	genres = {
 		"Action",
