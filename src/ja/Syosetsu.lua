@@ -1,10 +1,19 @@
--- {"id":3,"ver":"1.2.2","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
+-- {"id":3,"ver":"1.2.4","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
 --- @author Doomsdayrs
 --- @version 1.2.0
 
 local baseURL = "https://yomou.syosetu.com"
 local passageURL = "https://ncode.syosetu.com"
 local encode = Require("url").encode
+
+local function getTotalPages(html)
+	local lastPageLink = html:select("a.novelview_pager-last"):attr("href")
+	if lastPageLink then
+		local totalPages = tonumber(lastPageLink:match("p=(%d+)"))
+		return totalPages or 1
+	end
+	return 1
+end
 
 ---@param url string
 local function shrinkURL(url)
@@ -67,19 +76,27 @@ return {
 		end
 		-- Chapters
 		if loadChapters then
-			novelPage:setChapters(AsList(map(document:select("dl.novel_sublist2"), function(v, i)
-				local chap = NovelChapter()
-				chap:setTitle(v:selectFirst("a"):text())
-				chap:setLink(v:selectFirst("a"):attr("href"))
-				chap:setRelease(v:selectFirst("dt.long_update"):text())
-				chap:setOrder(i)
-				return chap
-			end)))
+			local chapters = {}
+			local totalPages = getTotalPages(document)
+			for page = 1, totalPages do
+				local pageURL = novelURL .. "?p=" .. page
+				local pageDocument = GETDocument(passageURL .. pageURL)
+				map(pageDocument:select("dl.novel_sublist2"), function(v)
+					local chap = NovelChapter()
+					chap:setTitle(v:selectFirst("a"):text())
+					chap:setLink(v:selectFirst("a"):attr("href"))
+					chap:setRelease(v:selectFirst("dt.long_update"):text())
+					table.insert(chapters, chap)
+				end)
+			end
+			novelPage:setChapters(AsList(chapters))
 		end
+
 		return novelPage
 	end,
 	shrinkURL = shrinkURL,
 	expandURL = expandURL,
+	getTotalPages = getTotalPages,
 	search = function(data)
 		return map(GETDocument(baseURL .. "/search.php?&word=" .. encode(data[0]) .. "&p=" .. data[PAGE])
 				:select("div.searchkekka_box"),
