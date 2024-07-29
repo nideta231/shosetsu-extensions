@@ -1,4 +1,4 @@
--- {"id":95564,"ver":"1.0.2","libVer":"1.0.0","author":"Confident-hate"}
+-- {"id":95564,"ver":"1.0.4","libVer":"1.0.0","author":"Confident-hate"}
 
 local baseURL = "https://novelusb.com"
 
@@ -148,8 +148,13 @@ local function getPassage(chapterURL)
     htmlElement = htmlElement:selectFirst("#chr-content")
     local toRemove = {}
     htmlElement:traverse(NodeVisitor(function(v)
-        if v:tagName() == "p" and v:text() == "" then
-            toRemove[#toRemove+1] = v
+        if v:tagName() == "p" then
+            if v:text() == "" then
+                toRemove[#toRemove+1] = v
+            else
+                local textContent = v:text()
+                v:text(textContent:gsub("<", "&lt;"):gsub(">", "&gt;"))
+            end
         end
     end, nil, true))
     for _,v in pairs(toRemove) do
