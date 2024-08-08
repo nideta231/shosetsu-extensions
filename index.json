@@ -27,6 +27,10 @@
     {
       "name": "Madara",
       "ver": "2.9.1"
+    },
+    {
+      "name": "XenForo",
+      "ver": "1.0.0"
     }
   ],
   "scripts": [
@@ -697,6 +701,26 @@
       "id": 93278,
       "lang": "all",
       "ver": "1.0.2",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "SpaceBattles",
+      "fileName": "SpaceBattles",
+      "imageURL": "https://forums.spacebattles.com/data/svg/2/1/1722951957/2022_favicon_192x192.png",
+      "id": 1403038472,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Sufficient Velocity",
+      "fileName": "SufficientVelocity",
+      "imageURL": "https://forums.sufficientvelocity.com/data/svg/20/1/1723049117/logo_icon.png",
+      "id": 1241865462,
+      "lang": "en",
+      "ver": "1.0.0",
       "libVer": "1.0.0",
       "md5": ""
     }
