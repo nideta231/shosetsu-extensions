@@ -1,4 +1,4 @@
--- {"id":95564,"ver":"1.0.5","libVer":"1.0.0","author":"Confident-hate"}
+-- {"id":95564,"ver":"1.0.6","libVer":"1.0.0","author":"Confident-hate"}
 
 local baseURL = "https://novelbin.com"
 
@@ -187,7 +187,13 @@ local function parseNovel(novelURL)
     local url = baseURL .. "/" .. novelURL
     local document = GETDocument(url)
     local chID = string.match(url, ".*/([^/]+)$")
-    local chapterURL = baseURL .. "/ajax/chapter-archive?novelId=" .. chID
+    -- using https://novelbin.com/ to get chapter list resulting in randomized base URL for each chapter
+    -- for now using https://novelusb.com/ seems to give consistent result.
+    -- TODO: to properly fix it maybe do these:
+    -- 1. get first chapter URL, remove last part of url and store it as base chapter url.    
+    -- 2. only store last part of the url as link for all chapters  
+    -- 3. on getPassage function, append the base chapter url to each chapter link  
+    local chapterURL = "https://novelusb.com/ajax/chapter-archive?novelId=" .. chID
     local chapterDoc = GETDocument(chapterURL)
     return NovelInfo {
         title = document:selectFirst(".title"):text(),
