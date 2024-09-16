@@ -30,7 +30,7 @@
     },
     {
       "name": "XenForo",
-      "ver": "1.0.0"
+      "ver": "1.0.1"
     }
   ],
   "scripts": [
@@ -710,7 +710,7 @@
       "imageURL": "https://forums.spacebattles.com/data/svg/2/1/1722951957/2022_favicon_192x192.png",
       "id": 1403038472,
       "lang": "en",
-      "ver": "1.0.0",
+      "ver": "1.1.0",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -719,6 +719,16 @@
       "fileName": "SufficientVelocity",
       "imageURL": "https://forums.sufficientvelocity.com/data/svg/20/1/1723049117/logo_icon.png",
       "id": 1241865462,
+      "lang": "en",
+      "ver": "1.1.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Questionable Questing",
+      "fileName": "QuestionableQuesting",
+      "imageURL": "https://forum.questionablequesting.com/styles/dark_responsive_green/xenforo/qq-blue-small.png",
+      "id": 1915581632,
       "lang": "en",
       "ver": "1.0.0",
       "libVer": "1.0.0",
