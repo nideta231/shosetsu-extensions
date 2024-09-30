@@ -136,7 +136,7 @@ end
 
 return {
 	id = 4300,
-	name = "Rain Of Snow Translations",
+	name = "Rain of Snow Translations",
 	baseURL = baseURL,
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/RainOfSnow.png",
 	chapterType = ChapterType.HTML,

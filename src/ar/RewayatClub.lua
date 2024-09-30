@@ -9,7 +9,7 @@ local qs = Require("url").querystring
 
 return {
     id = 3302,
-    name = "RewayatClub - نادي الروايات",
+    name = "Rewayat Club - نادي الروايات",
     baseURL = baseURL,
     hasSearch = true,
     chapterType = ChapterType.HTML,
