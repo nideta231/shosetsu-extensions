@@ -285,7 +285,7 @@
       "md5": "911fedf88cf4fad6ccc1561e625dd219"
     },
     {
-      "name": "CreativeNovels",
+      "name": "Creative Novels",
       "fileName": "CreativeNovels",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/CreativeNovels.png",
       "id": 911,
@@ -637,7 +637,7 @@
     {
       "name": "Ranobelib",
       "fileName": "Ranobelib",
-      "imageURL": "https://ranobelib.me/icons/android-icon-192x192.png",
+      "imageURL": "https://ranobelib.me/images/logo/rl/icon.png",
       "id": 73,
       "lang": "ru",
       "ver": "2.0.0",
@@ -697,7 +697,7 @@
     {
       "name": "Kemono",
       "fileName": "Kemono",
-      "imageURL": "https://kemono.party/static/klogo.png",
+      "imageURL": "https://kemono.su/static/klogo.png",
       "id": 93278,
       "lang": "all",
       "ver": "1.0.2",

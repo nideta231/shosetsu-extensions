@@ -2,7 +2,7 @@
 
 return Require("Madara")("https://blnovels.net", {
     id = 172002,
-    name = "BLNovels",
+    name = "BL Novels",
     imageURL = "https://blnovels.net/wp-content/uploads/2022/07/cropped-100-Sem-Ti%CC%81tulo_20220712124716-192x192.png",
 
     latestNovelSel = "div.col-6.col-md-3.badge-pos-2",

@@ -141,7 +141,7 @@ end
 
 return {
 	id = 702,
-	name = "NovelTL",
+	name = "Novel.TL",
 	baseURL = baseURL,
 	imageURL = "https://novel.tl/logo.png",
 	chapterType = ChapterType.HTML,

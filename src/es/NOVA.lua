@@ -225,7 +225,6 @@ return {
 	name = "NOVA",
 	baseURL = baseURL,
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/NOVA.png",
-	imageURL = "https://github.com/khonkhortisan/extensions/raw/novelasligeras.net/icons/NOVA.png", --TODO
 	hasSearch = true,
 	chapterType = ChapterType.HTML,
 	startIndex = 1,

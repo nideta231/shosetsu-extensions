@@ -1,8 +1,8 @@
--- {"id":75,"ver":"1.0.6","libVer":"1.0.0","author":"Doomsdayrs, AbhiTheModder","dep":["Madara>=2.2.0"]}
+-- {"id":76,"ver":"1.0.6","libVer":"1.0.0","author":"Doomsdayrs, AbhiTheModder","dep":["Madara>=2.2.0"]}
 
 return Require("Madara")("https://WuxiaWorld.site", {
   id = 76,
-  name = "WuxiaWorldsite",
+  name = "WuxiaWorld.Site",
   imageURL = "https://wuxiaworld.site/wp-content/uploads/2019/02/WuxiaWorld-e1567126455773.png",
   novelListingURLPath = "novels-list",
   chaptersScriptLoaded = true,
