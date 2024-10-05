@@ -1,4 +1,4 @@
--- {"ver":"1.0.1","author":"JFronny","dep":["url>=1.0.0"]}
+-- {"ver":"1.0.2","author":"JFronny","dep":["url>=1.0.0"]}
 
 local qs = Require("url").querystring
 
@@ -95,8 +95,6 @@ function defaults:parseNovel(novelURL, loadChapters)
         local threadmarkContainer = first(threadmarks:select(".threadmarkListingHeader-stats dl.pairs"), function(v)
             return v:selectFirst("dt"):text() == "Threadmarks"
         end)
-        -- enable this when using the extension tester
-        -- if threadmarkContainer == nil then return novel end
         local count = threadmarkContainer:selectFirst("dd"):text():gsub(",", "")
         count = tonumber(count)
         count = count - count % 200
@@ -175,6 +173,7 @@ return function(baseURL, _self)
     end })
 
     _self["baseURL"] = baseURL
+    local novelUrlBlacklist = _self["novelUrlBlacklist"] or "^$"
     _self["listings"] = map(_self.forums, function(v)
         return Listing(v.title, true, function(data)
             --- @type int
@@ -185,9 +184,10 @@ return function(baseURL, _self)
             local pageCount = tonumber(doc:selectFirst(".pageNav-main .pageNav-page:last-of-type a"):text())
             if page > pageCount then return {} end
 
-            return map(doc:select(".js-threadList .structItem--thread"), function(v)
+            return mapNotNil(doc:select(".js-threadList .structItem--thread"), function(v)
                 local href = v:selectFirst(".structItem-title a"):attr("href")
                 href = href:gsub("/threadmarks$", ""):gsub("/$", ""):sub(10)
+                if href:match(novelUrlBlacklist) then return nil end
                 return Novel {
                     title = v:selectFirst(".structItem-title"):text(),
                     link = href,

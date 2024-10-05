@@ -1,4 +1,4 @@
--- {"id":1241865462,"ver":"1.1.0","libVer":"1.0.0","author":"JFronny","dep":["XenForo>=1.0.1"]}
+-- {"id":1241865462,"ver":"1.1.1","libVer":"1.0.0","author":"JFronny","dep":["XenForo>=1.0.2"]}
 
 return Require("XenForo")("https://forums.sufficientvelocity.com/", {
     id = 1241865462,
@@ -37,5 +37,6 @@ return Require("XenForo")("https://forums.sufficientvelocity.com/", {
             title = "Quests Archive",
             forum = 17
         }
-    }
+    },
+    novelUrlBlacklist = ".*%.20442$"
 })
