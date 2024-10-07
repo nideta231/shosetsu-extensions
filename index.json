@@ -30,7 +30,7 @@
     },
     {
       "name": "XenForo",
-      "ver": "1.0.1"
+      "ver": "1.0.2"
     }
   ],
   "scripts": [
@@ -720,7 +720,7 @@
       "imageURL": "https://forums.sufficientvelocity.com/data/svg/20/1/1723049117/logo_icon.png",
       "id": 1241865462,
       "lang": "en",
-      "ver": "1.1.0",
+      "ver": "1.1.1",
       "libVer": "1.0.0",
       "md5": ""
     },
