@@ -305,16 +305,6 @@
       "md5": "ff81cdb3303780e243e4d3e6d35ce418"
     },
     {
-      "name": "Tangsanshu",
-      "fileName": "Tangsanshu",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/Tangsanshu.png",
-      "id": 234,
-      "lang": "zh",
-      "ver": "1.0.2",
-      "libVer": "1.0.0",
-      "md5": "d8dfa1e373af2b72353a1464f715b39"
-    },
-    {
       "name": "BestLightNovel",
       "fileName": "BestLightNovel",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/BestLightNovel.png",
