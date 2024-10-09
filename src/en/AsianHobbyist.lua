@@ -1,4 +1,4 @@
--- {"id":951,"ver":"2.0.5","libVer":"1.0.0","author":"Doomsdayrs"}
+-- {"id":951,"ver":"2.0.6","libVer":"1.0.0","author":"Doomsdayrs"}
 
 local baseURL = "https://www.asianhobbyist.com"
 local encoding = ""
@@ -70,7 +70,7 @@ local function search(data)
 	end
 
 	return map(doc:select("li.flex"), function(v)
-		local titleElement = v:selectFirst("div.title"):selectFirst("a")
+		local titleElement = v:selectFirst("div.title a")
 		return Novel {
 			title = titleElement:attr("title"),
 			imageURL = v:selectFirst("img"):attr("src"),
@@ -85,8 +85,8 @@ local function parseNovel(novelURL)
 	local document = GETDocument(expandURL(novelURL, KEY_NOVEL_URL))
 	return NovelInfo {
 		title = document:selectFirst("h1.entry-title"):text(),
-		description = document:selectFirst("div.description"):selectFirst("div"):text(),
-		imageURL = document:selectFirst("div.thumb"):selectFirst("img"):attr("data-lazy-src"),
+		description = document:selectFirst("div.description"):text(),
+		imageURL = document:selectFirst("div.thumb img"):attr("src"),
 		chapters = AsList(
 				map(document:select("div.row.flex.fn"), function(v)
 					local divs = v:select("div")
@@ -119,7 +119,7 @@ return {
 				local image = a:selectFirst("img")
 				return Novel {
 					title = image:attr("alt"),
-					imageURL = image:attr("data-lazy-src"),
+					imageURL = image:attr("src"),
 					link = shrinkURL(a:attr("href"), KEY_NOVEL_URL)
 				}
 			end)
