@@ -1,4 +1,4 @@
--- {"id":4501,"ver":"1.0.4","libVer":"1.0.0","author":"MechTechnology"}
+-- {"id":4501,"ver":"1.0.5","libVer":"1.0.0","author":"MechTechnology"}
 
 return Require("Madara")("https://novelxs.com", {
 	id = 4501,
@@ -10,6 +10,7 @@ return Require("Madara")("https://novelxs.com", {
 	novelListingURLSuffix="&post_type=wp-manga",
 	shrinkURLNovel = "novel",
 	searchHasOper = true,
+	hasCloudFlare = true,
 	customStyle = "body { direction: rtl; }",
 
 	genres = {
