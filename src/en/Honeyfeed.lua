@@ -1,4 +1,4 @@
--- {"id":95565,"ver":"1.0.0","libVer":"1.0.0","author":"Confident-hate"}
+-- {"id":95565,"ver":"1.0.1","libVer":"1.0.0","author":"Confident-hate"}
 
 local baseURL = "https://www.honeyfeed.fm"
 local HoneyfeedLogo = "https://www.honeyfeed.fm/assets/main/pages/home/logo-honey-bomon-70595250eae88d365db99bd83ecdc51c917f32478fa535a6b3b6cffb9357c1b4.png"
@@ -171,20 +171,20 @@ local function parseNovel(novelURL)
         imgURL = imgElement:attr("src")
     end
     return NovelInfo {
-        title = document:selectFirst("h1"):text(),
+        title = document:selectFirst("div.mt8"):text(),
         description = document:selectFirst(".wrap-novel-body"):text(),
         imageURL = imgURL,
         status = ({
             Ongoing = NovelStatus.PUBLISHING,
             Finished = NovelStatus.COMPLETED,
-        })[document:selectFirst(".table > tbody:nth-child(1) > tr:nth-child(5) > td:nth-child(2)"):text()],
-        authors = { document:selectFirst("span.text-underline > a:nth-child(1)"):text()},
-        genres = map(document:select(".table > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(2) a"), text ),
+        })[document:selectFirst("span.pr8"):text()],
+        authors = { document:selectFirst("span.text-break-all.f14"):text()},
+        genres = map(document:selectFirst("div.wrap-novel-genres"):select("a.btn-genre-link btn"), text ),
         chapters = AsList(
-                map(document:select("#wrap-chapter .list-chapter .list-group-item"), function(v)
+                map(document:select("#wrap-chapter .list-chapter .list-group-item a"), function(v)
                     return NovelChapter {
                         order = v,
-                        title = v:selectFirst(".mr5"):text() .. v:selectFirst(".chapter-name"):text(),
+                        title = v:selectFirst("div.f12"):text() .. v:selectFirst("div.text-bold"):text(),
                         link = baseURL .. v:attr("href")
                     }
                 end)
