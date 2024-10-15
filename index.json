@@ -193,7 +193,7 @@
       "ver": "1.0.1",
       "libVer": "1.0.0",
       "md5": ""
-    }, 
+    },
     {
       "name": "Light Novels Brasil",
       "fileName": "LightNovelsBrasil",
@@ -719,6 +719,16 @@
       "fileName": "Ruvers",
       "imageURL": "https://ruvers.ru/img/favicon/apple-touch-icon.png",
       "id": 711,
+      "lang": "ru",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Целлюлоза",
+      "fileName": "Zelluloza",
+      "imageURL": "https://zelluloza.ru/assets/img/icons/Logo.png",
+      "id": 722,
       "lang": "ru",
       "ver": "1.0.0",
       "libVer": "1.0.0",
