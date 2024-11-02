@@ -1,4 +1,4 @@
--- {"id":95565,"ver":"1.0.1","libVer":"1.0.0","author":"Confident-hate"}
+-- {"id":95565,"ver":"1.0.2","libVer":"1.0.0","author":"Confident-hate"}
 
 local baseURL = "https://www.honeyfeed.fm"
 local HoneyfeedLogo = "https://www.honeyfeed.fm/assets/main/pages/home/logo-honey-bomon-70595250eae88d365db99bd83ecdc51c917f32478fa535a6b3b6cffb9357c1b4.png"
@@ -164,6 +164,7 @@ end
 local function parseNovel(novelURL)
     local url = baseURL .. novelURL
     local document = GETDocument(url)
+    local chapterDocument = GETDocument(url.."/chapters")
     document:select("#wrap-button-remove-blur"):remove()
     local imgURL = HoneyfeedLogo
     local imgElement = document:selectFirst(".wrap-img-novel-mask img")
@@ -181,10 +182,10 @@ local function parseNovel(novelURL)
         authors = { document:selectFirst("span.text-break-all.f14"):text()},
         genres = map(document:selectFirst("div.wrap-novel-genres"):select("a.btn-genre-link btn"), text ),
         chapters = AsList(
-                map(document:select("#wrap-chapter .list-chapter .list-group-item a"), function(v)
+                map(chapterDocument:select("#wrap-chapter .list-chapter .list-group-item a"), function(v)
                     return NovelChapter {
                         order = v,
-                        title = v:selectFirst("div.f12"):text() .. v:selectFirst("div.text-bold"):text(),
+                        title = "[" .. v:selectFirst("div.f12"):text() .. "] " .. v:selectFirst("div.text-bold"):text(),
                         link = baseURL .. v:attr("href")
                     }
                 end)
