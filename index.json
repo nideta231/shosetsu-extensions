@@ -21,6 +21,10 @@
       "ver": "1.0.0"
     },
     {
+      "name": "utf8",
+      "ver": "1.0.0"
+    },
+    {
       "name": "WWVolare",
       "ver": "1.2.2"
     },
@@ -720,7 +724,7 @@
       "imageURL": "https://ruvers.ru/img/favicon/apple-touch-icon.png",
       "id": 711,
       "lang": "ru",
-      "ver": "1.0.0",
+      "ver": "1.0.1",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -729,6 +733,16 @@
       "fileName": "Zelluloza",
       "imageURL": "https://zelluloza.ru/assets/img/icons/Logo.png",
       "id": 722,
+      "lang": "ru",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Автор Тудей",
+      "fileName": "AuthorToday",
+      "imageURL": "https://author.today/dist/favicons/android-chrome-192x192.png",
+      "id": 733,
       "lang": "ru",
       "ver": "1.0.0",
       "libVer": "1.0.0",
