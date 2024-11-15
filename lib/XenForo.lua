@@ -1,4 +1,4 @@
--- {"ver":"1.0.2","author":"JFronny","dep":["url>=1.0.0"]}
+-- {"ver":"1.0.3","author":"JFronny","dep":["url>=1.0.0"]}
 
 local qs = Require("url").querystring
 
@@ -108,7 +108,7 @@ function defaults:parseNovel(novelURL, loadChapters)
                 return NovelChapter {
                     order = (page - 1) * 200 + i,
                     title = linkElement:text(),
-                    link = self.shrinkURL(linkElement:attr("href")):sub(10),
+                    link = self:shrinkURL(linkElement:attr("href")):sub(10),
                     release = (timeElement and (timeElement:attr("title") or timeElement:attr("unixtime")))
                 }
             end)

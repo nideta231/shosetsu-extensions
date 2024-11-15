@@ -34,7 +34,7 @@
     },
     {
       "name": "XenForo",
-      "ver": "1.0.2"
+      "ver": "1.0.3"
     }
   ],
   "scripts": [
@@ -714,7 +714,7 @@
       "imageURL": "https://forum.questionablequesting.com/styles/dark_responsive_green/xenforo/qq-blue-small.png",
       "id": 1915581632,
       "lang": "en",
-      "ver": "1.0.0",
+      "ver": "1.1.0",
       "libVer": "1.0.0",
       "md5": ""
     },
