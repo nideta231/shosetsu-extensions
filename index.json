@@ -469,16 +469,6 @@
       "md5": ""
     },
     {
-      "name": "Read Lite Novel.com",
-      "fileName": "LightNovelReader",
-      "imageURL": "https://readlitenovel.com/assets/new/images/new-lnrlogo.png",
-      "id": 1784,
-      "lang": "en",
-      "ver": "1.0.6",
-      "libVer": "1.0.0",
-      "md5": ""
-    },
-    {
       "name": "Rewayat Club - نادي الروايات",
       "fileName": "RewayatClub",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/RewayatClub.png",
