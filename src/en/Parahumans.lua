@@ -1,4 +1,4 @@
--- {"id":78,"ver":"1.0.0","libVer":"1.0.0","author":"JFronny"}
+-- {"id":78,"ver":"1.1.0","libVer":"1.0.0","author":"JFronny"}
 
 local settings = {}
 
@@ -20,6 +20,19 @@ local function lift(xtable)
     return t
 end
 
+local function processArcName(name)
+    return name:gsub("^[ ]*", "")
+            :gsub("[ ]*$", "")
+            :gsub("^Arc [0-9]* ", "")
+            :gsub("– ", "")
+            :gsub("^%(", "")
+            :gsub("%)$", "")
+            .. " - "
+end
+
+local USERAGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:90.0) Gecko/20100101 Firefox/90.0"
+local HEADERS = HeadersBuilder():add("User-Agent", USERAGENT):build()
+
 local auxiliary = {
     ["https://parahumans.wordpress.com/"] = {
         name = "Worm",
@@ -37,13 +50,28 @@ local auxiliary = {
         arc = "a",
         chapters = ".cat-item .cat-item a"
     },
-    -- We ignore Twig since that uses a different (and significantly harder to parse) ToC.
-    -- If you want to read it, feel free to set it up yourself.
-    --["https://twigserial.wordpress.com/"] = {
-    --    name = "Twig",
-    --    image = "https://twigserial.wordpress.com/wp-content/uploads/2016/06/cropped-twigheader5.png",
-    --    description = "#content .entry-content p:nth-child(n+2):nth-child(-n+3)",
-    --},
+    ["https://twigserial.wordpress.com/"] = {
+        name = "Twig",
+        image = "https://twigserial.wordpress.com/wp-content/uploads/2016/06/cropped-twigheader5.png",
+        description = {2, 9},
+        extractChapters = function()
+            local document = RequestDocument(GET("https://twigserial.wordpress.com/", HEADERS))
+            local chaps = {}
+            local options = mapNotNil(document:select("#cat option"), function(v) return v end)
+            local arcPrefix = ""
+            for i = 3, #options do
+                if options[i]:attr("class") == "level-1" then
+                    arcPrefix = processArcName(options[i]:text())
+                else
+                    table.insert(chaps, NovelChapter {
+                        title = arcPrefix .. options[i]:text(),
+                        link = "https://twigserial.wordpress.com/?cat=" .. options[i]:attr("value")
+                    })
+                end
+            end
+            return chaps
+        end
+    },
     ["https://www.parahumans.net/"] = {
         name = "Ward",
         image = "https://i2.wp.com/www.parahumans.net/wp-content/uploads/2017/10/cropped-Ward-Banner-Proper-1.jpg",
@@ -59,17 +87,51 @@ local auxiliary = {
         arcs = "#nav_menu-2 .menu-item:not(.menu-item .menu-item)",
         arc = "a",
         chapters = ".sub-menu a"
+    },
+    ["https://clawwebserial.blog/"] = {
+        name = "Claw",
+        image = "https://clawwebserial.blog/wp-content/uploads/2024/03/claw-banner2.png",
+        descriptionUrl = "https://clawwebserial.blog/about/",
+        description = {1, 3},
+        extractChapters = function()
+            local document = RequestDocument(GET("https://clawwebserial.blog/table-of-contents/", HEADERS))
+            local chaps = {}
+            local paragraphs = mapNotNil(document:select(".entry-content p"), function(v) return v end)
+            for i = 2, #paragraphs, 2 do
+                local arcPrefix = processArcName(paragraphs[i]:text())
+                chaps = concatLists(chaps, mapNotNil(paragraphs[i + 1]:select("a"), function(v)
+                    return NovelChapter {
+                        title = arcPrefix .. v:text(),
+                        link = v:attr("href")
+                    }
+                end))
+            end
+            return chaps
+        end
     }
+    -- We ignore Seek since that does not seem to have a ToC.
+    -- If you want to read it, feel free to set it up yourself.
+    --["https://seekwebserial.wordpress.com/"] = {
+    --    name = "Seek",
+    --    image = "https://seekwebserial.wordpress.com/wp-content/uploads/2024/11/headerart_w.png",
+    --    descriptionUrl = "https://seekwebserial.wordpress.com/about/",
+    --    description = {1, 6},
+    --    arcs = "#nav_menu-2 .menu-item:not(.menu-item .menu-item)",
+    --    arc = "a",
+    --    chapters = ".sub-menu a"
+    --}
 }
 
 local function parseNovel(novelURL, loadChapters)
-    local document = GETDocument(novelURL)
+    local document = RequestDocument(GET(novelURL, HEADERS))
     local aux = auxiliary[novelURL]
 
+    local aboutDocument = document
+    if aux.descriptionUrl then aboutDocument = RequestDocument(GET(aux.descriptionUrl, HEADERS)) end
     local novel = NovelInfo {
         title = aux.name,
         imageURL = aux.image,
-        description = table.concat(map(document:select("#content .entry-content p"), function(v)
+        description = table.concat(map(aboutDocument:select("#content .entry-content p"), function(v)
             return v:text()
         end), "\n\n", aux.description[1], aux.description[2]),
         authors = { "Wildbow" },
@@ -78,25 +140,23 @@ local function parseNovel(novelURL, loadChapters)
 
     if loadChapters then
         local chaps = {}
-        local i = 0
-        map(document:select(aux.arcs), function(element)
-            local arcPrefix = element:selectFirst(aux.arc):text()
-                    :gsub("^[ ]*", "")
-                    :gsub("[ ]*$", "")
-                    :gsub("^Arc [0-9]* ", "")
-                    :gsub("– ", "")
-                    :gsub("^%(", "")
-                    :gsub("%)$", "")
-                    .. " - "
-            chaps = concatLists(chaps, mapNotNil(element:select(aux.chapters), function(v)
-                i = i + 1
-                return NovelChapter {
-                    order = i,
-                    title = arcPrefix .. v:text(),
-                    link = v:attr("href")
-                }
-            end))
-        end)
+        if aux.extractChapters then
+            chaps = aux.extractChapters()
+        else
+            local i = 0
+            local tocDocument = document
+            map(tocDocument:select(aux.arcs), function(element)
+                local arcPrefix = processArcName(element:selectFirst(aux.arc):text())
+                chaps = concatLists(chaps, mapNotNil(element:select(aux.chapters), function(v)
+                    i = i + 1
+                    return NovelChapter {
+                        order = i,
+                        title = arcPrefix .. v:text(),
+                        link = v:attr("href")
+                    }
+                end))
+            end)
+        end
 
         novel:setChapters(AsList(chaps))
     end
