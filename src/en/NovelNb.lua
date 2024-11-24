@@ -1,4 +1,4 @@
--- {"id":1781,"ver":"1.0.6","libVer":"1.0.0","author":"Xanvial"}
+-- {"id":1781,"ver":"1.0.7","libVer":"1.0.0","author":"Xanvial"}
 local qs = Require("url").querystring
 
 local defaults = {
@@ -189,5 +189,5 @@ end
 return novelData("https://novel35.com", {
 	id = 1781,
 	name = "Novel Nb",
-	imageURL = "https://novelnb.net/assets/css/img/logo.png",
+	imageURL = "https://novel35.com/assets/css/img/logo.png",
 })
