@@ -1,4 +1,4 @@
--- {"id":93278,"ver":"1.0.2","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","dkjson>=1.0.0"]}
+-- {"id":93278,"ver":"1.0.3","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","dkjson>=1.0.0"]}
 
 local baseURL = "https://kemono.su"
 local apiURL = baseURL .. "/api/v1"
@@ -6,9 +6,13 @@ local apiURL = baseURL .. "/api/v1"
 local json = Require("dkjson")
 
 local _creators
+local _postCache = {}
+
 local function creators()
     if not _creators then
-        _creators = json.GET(apiURL .. "/creators.txt")
+        -- json.GET only automatically decodes application/json responses, which this isn't
+        local res = Request(GET(apiURL .. "/creators.txt"))
+        _creators = json.decode(res:body():string())
     end
     return _creators
 end
@@ -53,7 +57,7 @@ return {
     },
 
     getPassage = function(chapterURL)
-        local content = json.GET(apiURL .. chapterURL).content
+        local content = _postCache[chapterURL] or json.GET(apiURL .. chapterURL).post.content
         return "<!DOCTYPE html><html><head></head><body>" .. content .. "</body></html>"
     end,
 
@@ -82,10 +86,13 @@ return {
 
             info:setChapters(AsList(filter(map(flatten(posts), function(v, i)
                 if v.content and #v.content > #("<p><br></p>") then
+                    local href = novelURL .. "/post/" .. v.id
+                    _postCache[href] = v.content
+
                     return NovelChapter {
                         order = #posts - i,
                         title = v.title,
-                        link = novelURL .. "/post/" .. v.id
+                        link = href
                     }
                 end
             end), function(v) return v end)))
