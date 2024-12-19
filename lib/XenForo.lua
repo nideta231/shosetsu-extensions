@@ -1,4 +1,4 @@
--- {"ver":"1.0.4","author":"JFronny","dep":["url>=1.0.0"]}
+-- {"ver":"1.0.5","author":"JFronny","dep":["url>=1.0.0"]}
 
 local qs = Require("url").querystring
 
@@ -124,6 +124,15 @@ function defaults:parseNovel(novelURL, loadChapters)
     return novel
 end
 
+local function handleNovelURL(url)
+    url = url:gsub("?.*$", "")
+            :gsub("/$", "")
+            :gsub("/threadmarks$", "")
+            :gsub("/unread$", "")
+            :sub(10)
+    return url
+end
+
 local CATEGORY_FILTER_KEY = 100
 local ORDER_BY_FILTER_KEY = 200
 
@@ -160,7 +169,7 @@ function defaults:search(data)
         local a = v:selectFirst(".contentRow-title a")
         return Novel {
             title = a:text(),
-            link = a:attr("href"):sub(10, -2),
+            link = handleNovelURL(a:attr("href")),
             imageURL = extractImage(self.baseURL, v:selectFirst(".contentRow-figure img"))
         }
     end)
@@ -186,7 +195,7 @@ return function(baseURL, _self)
 
             return mapNotNil(doc:select(".js-threadList .structItem--thread"), function(v)
                 local href = v:selectFirst(".structItem-title a"):attr("href")
-                href = href:gsub("/threadmarks$", ""):gsub("/$", ""):sub(10)
+                href = handleNovelURL(href)
                 if href:match(novelUrlBlacklist) then return nil end
                 return Novel {
                     title = v:selectFirst(".structItem-title"):text(),
