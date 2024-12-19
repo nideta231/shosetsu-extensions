@@ -1,9 +1,9 @@
--- {"id":823465,"ver":"1.0.1","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.2.0"]}
+-- {"id":823465,"ver":"1.1.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.2.0"]}
 
-return Require("Madara")("https://morenovel.net",{
+return Require("Madara")("https://risenovel.com",{
 	id = 823465,
-	name = "MORENOVEL",
-	imageURL = "https://morenovel.net/wp-content/uploads/2019/04/morenovel-1.png",
+	name = "Rise Novel",
+	imageURL = "https://risenovel.com/wp-content/uploads/2019/04/risenovel.png",
 
 	-- defaults values
 	latestNovelSel = "div.col-12.col-md-4.badge-pos-1",
