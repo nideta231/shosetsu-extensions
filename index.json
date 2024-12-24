@@ -419,16 +419,6 @@
       "md5": "16348946cb5981a279d80b5f34ffe505"
     },
     {
-      "name": "Sky Demon Order",
-      "fileName": "SkyDemonOrder",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/SkyDemonOrder.png",
-      "id": 93082,
-      "lang": "en",
-      "ver": "3.0.0",
-      "libVer": "1.0.0",
-      "md5": ""
-    },
-    {
       "name": "Novel 35",
       "fileName": "NovelNb",
       "imageURL": "https://novel35.com/assets/css/img/logo.png",
