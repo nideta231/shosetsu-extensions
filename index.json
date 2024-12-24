@@ -239,16 +239,6 @@
       "md5": "2ac8b2379560dac51930790615c7095"
     },
     {
-      "name": "VolareNovels",
-      "fileName": "VolareNovels",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/VolareNovels.png",
-      "id": 1274,
-      "lang": "en",
-      "ver": "1.0.3",
-      "libVer": "1.0.0",
-      "md5": "ff81cdb3303780e243e4d3e6d35ce418"
-    },
-    {
       "name": "BestLightNovel",
       "fileName": "BestLightNovel",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/BestLightNovel.png",
