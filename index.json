@@ -259,16 +259,6 @@
       "md5": "d2edddc58222392b59ed34b73e25d6b2"
     },
     {
-      "name": "WoopRead",
-      "fileName": "Woopread",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/WoopRead.png",
-      "id": 4217,
-      "lang": "en",
-      "ver": "2.2.2",
-      "libVer": "1.0.0",
-      "md5": ""
-    },
-    {
       "name": "Sleepy Translations",
       "fileName": "SleepyTranslations",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/SleepyTranslations.png",
