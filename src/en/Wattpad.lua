@@ -1,4 +1,4 @@
--- {"id":95556,"ver":"1.0.5","libVer":"1.0.0","author":"Confident-hate"}
+-- {"id":95556,"ver":"1.0.6","libVer":"1.0.0","author":"Confident-hate"}
 local json = Require("dkjson")
 local baseURL = "https://www.wattpad.com"
 
@@ -93,45 +93,22 @@ end
 --- @param data table
 local function search(data)
     local queryContent = data[QUERY]
-    if string.find(queryContent, "https://www.wattpad.com/") then
-        local query = queryContent
-        --convert chapter url to story url
-        if not string.find(query, "/story/") then
-            query = expandURL(GETDocument(query):selectFirst(".info .on-navigate"):attr("href"))
-        end
-        local document = RequestDocument(
-                RequestBuilder()
-                        :get()
-                        :url(query)
-                        :addHeader("Referer", "https://www.wattpad.com/")
-                        :build()
-        )
-        return map(document:select(".story-header"), function(v)
-            return Novel {
-            title = v:selectFirst(".story-info .sr-only"):text(),
-            link = shrinkURL(query),
-            imageURL = v:selectFirst(".story-cover img"):attr("src")
-            }
-        end)
-    else
-        local page = data[PAGE] - 1
-        local status = data[STATUS_FILTER_KEY]
-        local statusValue = ""
-        if status ~= nil then
-            statusValue = STATUS_PARAMS[status+1]
-        end
-        local query = baseURL .. "/v4/search/stories?query=" .. queryContent .. statusValue .. "&free=1&fields=stories(title,cover,url),nexturl&limit=20&mature=true&offset=" .. page*20
-        local response = RequestDocument(GET(query, nil, nil))
-        response = json.decode(response:text())
-
-        return map(response["stories"], function(v)
-            return Novel {
-                title = v.title,
-                link = shrinkURL(v.url),
-                imageURL = v.cover
-            }
-        end)
+    local page = data[PAGE] - 1
+    local status = data[STATUS_FILTER_KEY]
+    local statusValue = ""
+    if status ~= nil then
+        statusValue = STATUS_PARAMS[status+1]
     end
+    local query = baseURL .. "/v4/search/stories?query=" .. queryContent .. statusValue .. "&free=1&fields=stories(title,cover,url),nexturl&limit=20&mature=true&offset=" .. page*20
+    local response = RequestDocument(GET(query, nil, nil))
+    response = json.decode(response:text())
+    return map(response["stories"], function(v)
+        return Novel {
+            title = v.title,
+            link = shrinkURL(v.url),
+            imageURL = v.cover
+        }
+    end)
 end
 
 --- @param novelURL string @URL of novel
@@ -145,41 +122,39 @@ local function parseNovel(novelURL)
                     :addHeader("Referer", "https://www.wattpad.com/")
                     :build()
     )
-    local isPaid = document:selectFirst(".paid-indicator")
+    local description = ""
+    local isPaid = document:selectFirst(".MhigQ")
     local description = ""
     if isPaid ~= nil then 
-        description = "!! 💰 Paid Story !! \n" .. document:selectFirst(".description-text"):text()
+        description = "!! 💰 Contains Paid Chapters !! \n" .. document:selectFirst(".qzqzr"):text()
     else
-        description = document:selectFirst(".description-text"):text()
+        description = document:selectFirst(".qzqzr"):text()
     end
 
     local status = NovelStatus.UNKNOWN
-    for _, v in ipairs(mapNotNil(document:select(".story-badges"), function(v) return v end)) do
-        if     v:selectFirst(".icon.completed"):text() == "Complete" then
-            status = NovelStatus.COMPLETED
-        elseif v:selectFirst(".icon.completed"):text() == "Ongoing" then
-            status = NovelStatus.PUBLISHING
-        end
+    if     document:selectFirst(".typography-label-small-semi"):text() == "Complete" then
+        status = NovelStatus.COMPLETED
+    elseif document:selectFirst(".typography-label-small-semi"):text() == "Ongoing" then
+        status = NovelStatus.PUBLISHING
     end
 
     local novel = NovelInfo {
-        title = document:selectFirst(".story-info .sr-only"):text(),
+        title = document:selectFirst(".d2amY"):text(),
         description = description,
-        imageURL = document:select(".story-cover img"):attr("src"),
-        authors = { document:selectFirst(".author-info__username"):text() },
-        genres = map(document:select(".tag-items li a"), text ),
+        imageURL = document:select(".cover__BlyZa"):attr("src"),
+        authors = { document:selectFirst(".o94Sz"):text() },
+        genres = map(document:select(".AMIOO a"), text ),
         status = status,
         chapters = AsList(
-                map(document:select(".table-of-contents.hidden-xxs ul li"), function(v)
-                    local title = v:selectFirst("a .left-container"):text()
-                    local chapterRightLabel = v:selectFirst(".right-label"):text()
-                    if string.find(chapterRightLabel, "Locked") then
+                map(document:select(".NJXeo ul li"), function(v)
+                    local title = v:selectFirst("a"):text()
+                    if v:selectFirst('.MhigQ') then
                         title = "🔒 ".. title
                     end
                     return NovelChapter {
                         order = v,
                         title = title,
-                        link = v:selectFirst("a"):attr("href")
+                        link = shrinkURL(v:selectFirst("a"):attr("href"))
                     }
                 end)
         )
