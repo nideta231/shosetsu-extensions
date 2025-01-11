@@ -1,4 +1,4 @@
--- {"id":4302,"ver":"1.0.15","libVer":"1.0.0","author":"MechTechnology"}
+-- {"id":4302,"ver":"1.0.16","libVer":"1.0.0","author":"MechTechnology"}
 
 local baseURL = "https://travistranslations.com"
 
@@ -134,9 +134,10 @@ local function getPassage(chapterURL)
 	-- Remove empty <p> tags
 	local toRemove = {}
 	chap:traverse(NodeVisitor(function(v)
-		if v:tagName() == "p" and v:text() == "" then
+		if v:tagName() == "p" and v:text() == "" and v:childrenSize() == 0 then
 			toRemove[#toRemove+1] = v
 		end
+
 		if v:hasAttr("border") then
 			v:removeAttr("border")
 		end
